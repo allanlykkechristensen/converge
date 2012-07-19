@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<NewsML xmlns="http://iptc.org/std/NewsML/2003-10-10/" Version="1.2">
+    <NewsEnvelope>
+        <TransmissionId>70b3bdbc-93c0-4dc6-a941-7c3890e31c1d</TransmissionId>
+        <DateAndTime>20120711T210644</DateAndTime>
+        <NewsService FormalName="Interactive Media Management"/>
+        <NewsProduct FormalName="Citizen Mobile"/>
+    </NewsEnvelope>
+</NewsML>
