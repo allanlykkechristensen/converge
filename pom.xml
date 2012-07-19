@@ -8,7 +8,8 @@
     <name>Converge Platform</name>
     <modules>
         <module>converge-sms</module>
-    </modules>
+    <module>converge-newsschemas</module>
+  </modules>
     <properties>
         <netbeans.hint.license>gpl30</netbeans.hint.license>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
