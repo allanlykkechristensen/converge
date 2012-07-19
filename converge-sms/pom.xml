@@ -11,11 +11,6 @@
     <name>Converge SMS Web Service</name>
     <description>SOAP web service for sending SMSes</description>
 
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
@@ -27,6 +22,19 @@
             <groupId>com.googlecode.jsmpp</groupId>
             <artifactId>jsmpp</artifactId>
             <version>2.1.0-RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>3.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>2.2</version>
+            <type>jar</type>
         </dependency>
     </dependencies>
 
@@ -79,5 +87,41 @@
             </plugin>
         </plugins>
     </build>
+    
+    <properties>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <org-netbeans-modules-editor-indent.CodeStyle.usedProfile>project</org-netbeans-modules-editor-indent.CodeStyle.usedProfile>
+        <org-netbeans-modules-editor-indent.CodeStyle.project.tab-size>8</org-netbeans-modules-editor-indent.CodeStyle.project.tab-size>
+        <org-netbeans-modules-editor-indent.CodeStyle.project.text-limit-width>70</org-netbeans-modules-editor-indent.CodeStyle.project.text-limit-width>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.spaces-per-tab>4</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.spaces-per-tab>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.tab-size>8</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.tab-size>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.indent-shift-width>4</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.indent-shift-width>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.expand-tabs>true</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.expand-tabs>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.text-limit-width>80</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.text-limit-width>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAssert>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAssert>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapBinaryOps>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapBinaryOps>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapExtendsImplementsKeyword>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapExtendsImplementsKeyword>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapWhileStatement>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapWhileStatement>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAnnotationArgs>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAnnotationArgs>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAnnotations>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAnnotations>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapDoWhileStatement>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapDoWhileStatement>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapIfStatement>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapIfStatement>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapThrowsKeyword>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapThrowsKeyword>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapMethodParams>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapMethodParams>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapTernaryOps>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapTernaryOps>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapExtendsImplementsList>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapExtendsImplementsList>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAssignOps>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapAssignOps>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapForStatement>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapForStatement>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapEnumConstants>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapEnumConstants>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.blankLinesBeforeFields>1</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.blankLinesBeforeFields>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapChainedMethodCalls>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapChainedMethodCalls>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapMethodCallArgs>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapMethodCallArgs>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapArrayInit>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapArrayInit>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapFor>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapFor>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapThrowsList>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapThrowsList>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.enableCommentFormatting>false</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.enableCommentFormatting>
+    </properties>
 
 </project>
