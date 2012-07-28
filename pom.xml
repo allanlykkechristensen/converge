@@ -6,10 +6,11 @@
     <version>1.9.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Converge Platform</name>
+    
     <scm>
-        <connection>scm:git:git@github.com:allanlykkechristensen/converge.git</connection>
-        <url>scm:git:git@github.com:allanlykkechristensen/converge.git</url>
-        <developerConnection>scm:git:git@github.com:allanlykkechristensen/converge.git</developerConnection>
+        <connection>scm:git:https://github.com/allanlykkechristensen/converge.git</connection>
+        <url>scm:git:https://github.com/allanlykkechristensen/converge.git</url>
+        <developerConnection>scm:git:https://github.com/allanlykkechristensen/converge.git</developerConnection>
     </scm>
     <build>
         <plugins>
