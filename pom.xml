@@ -3,15 +3,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>dk.i2m.converge</groupId>
     <artifactId>converge</artifactId>
-    <version>1.9.1</version>
+    <version>1.9.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Converge Platform</name>
     <scm>
         <connection>scm:git:git@github.com:allanlykkechristensen/converge.git</connection>
         <url>scm:git:git@github.com:allanlykkechristensen/converge.git</url>
         <developerConnection>scm:git:git@github.com:allanlykkechristensen/converge.git</developerConnection>
-      <tag>converge-1.9.1</tag>
-  </scm>
+    </scm>
     <build>
         <plugins>
             <plugin>
