@@ -1,0 +1,9 @@
+.ajax-indicator-overlay { 
+    display: none; 
+    position: absolute; 
+    background: #ffffff; 
+}
+
+.ajax-indicator-overlay img { 
+    position: absolute; 
+}

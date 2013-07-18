@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+
+        <ui:repeat value="#{facesContext.messageList}" var="facesMessage">
+            
+            <h:panelGroup layout="block" styleClass="alert #{facesMessage.severity.ordinal == 3 ? 'alert-error' : ''}#{facesMessage.severity.ordinal == 0 ? 'alert-success' : ''}">
+                <strong>#{facesMessage.severity.ordinal == 3 ? 'Error' : ''}#{facesMessage.severity.ordinal == 2 ? 'Note' : ''}#{facesMessage.severity.ordinal == 0 ? 'Info' : ''}</strong>
+                <a class="close" data-dismiss="alert">&times;</a>
+                #{facesMessage.detail}
+            </h:panelGroup>
+        </ui:repeat>
+    </cc:implementation>
+</html>

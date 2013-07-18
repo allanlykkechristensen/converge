@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./templates/master.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:co="http://i2m.dk/jsf/converge"
+                xmlns:bootstrap="http://i2m.dk/jsf/bootstrap"
+                xmlns:h2="http://i2m.dk/jsf/html"
+                xmlns:core="http://java.sun.com/jsf/composite/components/core">
+
+    <ui:param name="menu" value="outlets" />
+    <ui:define name="title">#{msgs.Outlets_TITLE}</ui:define>
+    <ui:define name="pageMenu">
+        <h:panelGroup styleClass="span2" layout="span">
+            <h:form id="frmPageMenu">
+                <div class="sidebar-nav">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">
+                            #{msgs.Outlets_SUBMENU_OPTIONS}
+                        </li>
+                        <li>
+                            <h:commandLink id="lnkNewOutlet" action="OutletDetails?faces-redirect=true" immediate="true">
+                                <i class="icon-file"></i>
+                                #{msgs.Outlets_OPTION_NEW_OUTLET}
+                            </h:commandLink>
+                        </li>
+                        <li class="nav-header">
+                            #{msgs.Outlets_SUBMENU_SHOW}
+                        </li>
+                        <li class="active" title="#{msgs.Outlets_SHOW_ACTIVE_OUTLETS}">
+                            <h:commandLink id="lnkShowActive" actionListener="#{outlets.onShowActiveOutlets}" immediate="true">
+                                <f:ajax render=":frmOutlets" />
+                                <i class="icon-list"></i>
+                                #{msgs.Outlets_SHOW_ACTIVE_OUTLETS}
+                            </h:commandLink>
+                        </li>
+
+                        <li title="#{msgs.Outlets_SHOW_INACTIVE_OUTLETS}">
+                            <h:commandLink id="lnkShowInactive" actionListener="#{outlets.onShowInactiveOutlets}" immediate="true">
+                                <f:ajax render=":frmOutlets" />
+                                <i class="icon-list"></i>
+                                #{msgs.Outlets_SHOW_INACTIVE_OUTLETS}
+                            </h:commandLink>
+                        </li>
+                    </ul>    
+                </div>
+            </h:form>
+            <co:ajaxIndicator for="frmPageMenu:lnkShowActive" target="pageContent" />
+            <co:ajaxIndicator for="frmPageMenu:lnkShowInactive" target="pageContent" />
+        </h:panelGroup>
+
+    </ui:define>
+    <ui:define name="body">
+        <h:panelGroup id="pageContent" styleClass="span9 well" layout="span">
+            <h2 id="pageTitle">#{msgs.Outlets_SHOW_ACTIVE_OUTLETS}</h2>
+            <h:form id="frmOutlets">
+                <bootstrap:messages />
+                <h:dataTable id="tblOutlets" value="#{outlets.outlets}" var="outlet" styleClass="table table-striped table-bordered table-condensed" rendered="#{outlets.outlets.rowCount > 0}">
+                    <h:column headerClass="outlet-id-col">
+                        <f:facet name="header">#{msgs.Outlets_OUTLETS_COLUMN_ID}</f:facet>
+                        <h:button outcome="OutletDetails" value="#{outlet.abbreviation}" styleClass="btn btn-outlet-id">
+                            <f:param name="outlet_id" value="#{outlet.id}" />
+                        </h:button>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.Outlets_OUTLETS_COLUMN_NAME}</f:facet>
+                        <h:outputText value="#{outlet.name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.Outlets_OUTLETS_COLUMN_LANGUAGE}</f:facet>
+                        <h:outputText value="#{outlet.language.name}" />
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.Outlets_OUTLETS_COLUMN_TYPE}</f:facet>
+                        <c:set var="msgKey" value="generic_OUTLET_TYPE_#{outlet.type}" />
+                        <h:outputText value="#{global[msgKey]}" />
+                    </h:column>
+                </h:dataTable>
+
+                <h:outputText value="#{msgs.Outlets_NO_OUTLETS_AVAILABLE}" rendered="#{outlets.outlets.rowCount == 0}"/>
+
+                <script>
+                    $(document).ready(function() {
+                        // Intialises the quote table as a jQuery DataTable
+                        $('#frmOutlets\\:tblOutlets').dataTable( {
+                            "sPaginationType": "bootstrap",
+                            "oLanguage": {
+                                "sLengthMenu": "#{msgs.Outlets_X_OUTLETS_PER_PAGE}"
+                            }
+                        } );
+                    });
+                </script>
+
+            </h:form>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

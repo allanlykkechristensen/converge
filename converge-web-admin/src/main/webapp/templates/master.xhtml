@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>#{msgs.master_APPLICATION_TITLE}<ui:insert name="title"/></title>
+        <h:outputStylesheet library="css" name="bootstrap.css" />
+        <h:outputStylesheet library="css" name="bootstrap-responsive.css" />
+        <h:outputStylesheet library="css" name="bootstrap-datatables.css" />
+        <h:outputStylesheet library="css" name="default.css" />
+        <h:outputStylesheet library="css" name="jquery-ui-1.8.4.custom.css" />
+        <h:outputScript library="js" name="jquery.js" />
+    </h:head>
+
+    <h:body>
+        <h:form id="frmNavigation" style="margin: 0px;">
+            <script type="text/javascript" src="/converge-kernel/AppBar.js?appId=converge-web">
+            </script>
+        </h:form>
+
+        <div class="container-fluid">
+
+            <header>
+                <div class="subnav">
+                    <h:form>
+                        <ul class="nav nav-pills">
+                            <li class="#{menu == 'overview' ? 'active' : ''}">
+                                <h:outputLink value="index.xhtml">
+                                    <h:outputText value="#{msgs.master_MENU_OVERVIEW}" />
+                                </h:outputLink>
+                            </li>
+                            <li class="#{menu == 'security' ? 'active' : ''}">
+                                <h:outputLink value="Security.xhtml">
+                                    <h:outputText value="#{msgs.master_MENU_SECURITY}" />
+                                </h:outputLink>
+                            </li>
+                            <li class="#{menu == 'outlets' ? 'active' : ''}">
+                                <h:outputLink value="Outlets.xhtml">
+                                    <h:outputText value="#{msgs.master_MENU_OUTLETS}" />
+                                </h:outputLink>
+                            </li>
+                            <li class="#{menu == 'workflows' ? 'active' : ''}">
+                                <h:outputLink value="Workflows.xhtml">
+                                    <h:outputText value="#{msgs.master_MENU_WORKFLOWS}" />
+                                </h:outputLink>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+            </header>
+
+            <div class="row-fluid">&nbsp;</div>
+
+            <div class="row-fluid">
+                <ui:insert name="pageMenu"></ui:insert>
+                <ui:insert name="body"></ui:insert>
+            </div>
+
+            <hr />
+
+            <footer>
+                <p><h:outputText value="#{global.generic_COPYRIGHT}" escape="false" /></p>
+            </footer>
+
+        </div><!--/.fluid-container-->
+
+        <h:outputScript library="js" name="jquery.dataTables.min.js" target="body" />
+        <h:outputScript library="js" name="jquery-ui-1.8.18.custom.min.js" target="body" />
+        <h:outputScript library="js" name="bootstrap.min.js" target="body" />
+        <h:outputScript library="js" name="bootstrap-datatables.js" target="body" />
+        <h:outputScript library="js" name="application.js" target="body" />
+    </h:body>
+</html>

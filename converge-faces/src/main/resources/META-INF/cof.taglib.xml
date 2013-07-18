@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib 
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
+    version="2.0">
+    <namespace>http://getconverge.com/jsf/converge/functions</namespace>
+    <description>EL Functions used by Converge web applications</description>
+
+    <function>
+        <function-name>listToMap</function-name>
+        <function-class>com.getconverge.faces.functions.ListToMap</function-class>
+        <function-signature>java.util.Map listToMap(java.util.List, java.lang.String)</function-signature>
+    </function>
+</facelet-taglib>

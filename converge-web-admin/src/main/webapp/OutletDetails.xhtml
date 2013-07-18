@@ -1,0 +1,688 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./templates/master.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:co="http://i2m.dk/jsf/converge"
+                xmlns:bootstrap="http://i2m.dk/jsf/bootstrap"
+                xmlns:h2="http://i2m.dk/jsf/html"
+                xmlns:core="http://java.sun.com/jsf/composite/components/core">
+
+    <f:metadata>
+        <f:viewParam name="outlet_id" value="#{outletDetails.outletId}"
+                     converterMessage="#{msgs.OutletDetails_OUTLET_ID_CONVERTER_MESSAGE}"
+                     validatorMessage="#{msgs.OutletDetails_OUTLET_ID_VALIDATOR_MESSAGE}">
+            <f:validateLongRange minimum="1"/>
+        </f:viewParam>
+    </f:metadata>
+
+    <ui:param name="menu" value="outlets" />
+    <ui:define name="title">#{msgs.OutletDetails_TITLE}</ui:define>
+    <ui:define name="body">
+        <h:form id="frmOutletDetailsEdit" styleClass="form-horizontal" enctype="multipart/form-data">
+
+            <h:panelGroup id="pageContentEdit" styleClass="span8 well" layout="span">
+                <bootstrap:messages />
+
+                <c:if test="#{!outletDetails.new}">
+                    <h2 id="pageTitle">
+                        <h:outputFormat value="#{msgs.OutletDetails_DETAILS_OF_X}">
+                            <f:param value="#{outletDetails.outlet.name}" />
+                        </h:outputFormat>
+                    </h2>
+                </c:if>
+
+                <c:if test="#{outletDetails.new}">
+                    <h2 id="pageTitle">#{msgs.OutletDetails_NEW_OUTLET}</h2>
+                </c:if>
+
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#basic" data-toggle="tab">#{msgs.OutletDetails_TAB_BASIC}</a></li>
+                    <li><a href="#frmOutletDetailsEdit\:tabRateCards" data-toggle="tab">#{msgs.OutletDetails_TAB_RATE_CARDS}</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="basic">
+
+                        <bootstrap:fieldset label="#{msgs.OutletDetails_SECTION_STATUS}">
+                            <bootstrap:controlGroup id="outletStatus" label="#{msgs.OutletDetails_OUTLET_STATUS}" value="#{outletDetails.outlet.active}" type="radio" helpText="#{msgs.OutletDetails_OUTLET_STATUS_HELP_TEXT}">
+                                <f:selectItem itemLabel="#{msgs.OutletDetails_OUTLET_STATUS_ACTIVE}" itemValue="#{true}" />
+                                <f:selectItem itemLabel="#{msgs.OutletDetails_OUTLET_STATUS_INACTIVE}" itemValue="#{false}" />
+                            </bootstrap:controlGroup>
+                        </bootstrap:fieldset>
+
+                        <bootstrap:fieldset label="#{msgs.OutletDetails_SECTION_NAME_AND_TYPE}">
+                            <bootstrap:controlGroup id="outletName" 
+                                                    label="#{msgs.OutletDetails_OUTLET_NAME}" 
+                                                    value="#{outletDetails.outlet.name}" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_NAME_HELP_TEXT}"
+                                                    required="true" 
+                                                    requiredMessage="#{msgs.OutletDetails_OUTLET_NAME_REQUIRED_TEXT}" />
+                            <bootstrap:controlGroup id="outletAbbreviation" 
+                                                    styleClass="input-mini" 
+                                                    label="#{msgs.OutletDetails_OUTLET_ABBREVIATION}" 
+                                                    value="#{outletDetails.outlet.abbreviation}" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_ABBREVIATION_HELP_TEXT}"
+                                                    required="true" 
+                                                    requiredMessage="#{msgs.OutletDetails_OUTLET_ABBREVIATION_REQUIRED_TEXT}" />
+                            <bootstrap:controlGroup id="outletType" 
+                                                    label="#{msgs.OutletDetails_OUTLET_TYPE}" 
+                                                    value="#{outletDetails.outlet.type}" 
+                                                    type="radio" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_TYPE_HELP_TEXT}" 
+                                                    converter="enumTypeConverter" 
+                                                    required="true" 
+                                                    requiredMessage="#{msgs.OutletDetails_OUTLET_TYPE_REQUIRED_TEXT}">
+                                <f:selectItems value="#{common.outletTypes}" />
+                            </bootstrap:controlGroup>
+                        </bootstrap:fieldset>
+
+                        <bootstrap:fieldset label="#{msgs.OutletDetails_SECTION_LOCALISATION}">
+                            <bootstrap:controlGroup id="outletLanguage" 
+                                                    label="#{msgs.OutletDetails_OUTLET_LANGUAGE}" 
+                                                    value="#{outletDetails.outlet.language}" 
+                                                    type="select" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_LANGUAGE_HELP_TEXT}" 
+                                                    converter="#{languageConverter}" 
+                                                    converterMessage="Error converting language">
+                                <f:selectItems value="#{common.languages}" />
+                            </bootstrap:controlGroup>
+                            <bootstrap:controlGroup id="outletCurrency" 
+                                                    label="#{msgs.OutletDetails_OUTLET_CURRENCY}" 
+                                                    value="#{outletDetails.outlet.defaultCurrency}" 
+                                                    type="select" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_CURRENCY_HELP_TEXT}" 
+                                                    converter="#{currencyConverter}" 
+                                                    converterMessage="Error converting currency">
+                                <f:selectItems value="#{common.currencies}" />
+                            </bootstrap:controlGroup>
+                        </bootstrap:fieldset>
+
+                        <bootstrap:fieldset label="#{msgs.OutletDetails_SECTION_ADDRESS}">
+                            <bootstrap:controlGroup id="outletStreet" 
+                                                    type="text" 
+                                                    label="#{msgs.OutletDetails_OUTLET_ADDRESS_STREET}" 
+                                                    value="#{outletDetails.outlet.address.street}" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_ADDRESS_STREET_HELP_TEXT}" />
+                            <bootstrap:controlGroup id="outletCity" 
+                                                    type="text" 
+                                                    label="#{msgs.OutletDetails_OUTLET_ADDRESS_CITY}" 
+                                                    value="#{outletDetails.outlet.address.city}" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_ADDRESS_CITY_HELP_TEXT}" />
+                            <bootstrap:controlGroup id="outletState" 
+                                                    type="text" 
+                                                    label="#{msgs.OutletDetails_OUTLET_ADDRESS_STATE}" 
+                                                    value="#{outletDetails.outlet.address.state}" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_ADDRESS_STATE_HELP_TEXT}" />
+                            <bootstrap:controlGroup id="outletCountry" 
+                                                    type="select" 
+                                                    label="#{msgs.OutletDetails_OUTLET_ADDRESS_COUNTRY}" 
+                                                    value="#{outletDetails.outlet.address.country}" 
+                                                    helpText="#{msgs.OutletDetails_OUTLET_ADDRESS_COUNTRY_HELP_TEXT}" 
+                                                    converter="#{countryConverter}">
+                                <f:selectItems value="#{common.countries}" />
+                            </bootstrap:controlGroup>
+                        </bootstrap:fieldset>
+
+                        <bootstrap:fieldset label="#{msgs.OutletDetails_SECTION_BRANDING}">
+                            <bootstrap:controlGroup id="outletLogo" type="custom" label="#{msgs.OutletDetails_OUTLET_LOGO}">
+                                <h:graphicImage value="/FetchFile?id=#{outletDetails.outlet.id}&amp;lib=#{common.outletLogoLib}" rendered="#{outletDetails.outlet.logoSet}" />
+                                <h:commandButton styleClass="btn" value="#{msgs.OutletDetails_REMOVE_LOGO}" actionListener="#{outletDetails.onRemoveLogo}" rendered="#{outletDetails.outlet.logoSet}">
+                                    <f:ajax render="outletLogo" />
+                                </h:commandButton>
+                                <h2:inputFile id="logoFile" value="#{outletDetails.logo}" rendered="#{!outletDetails.outlet.logoSet}" />
+                                <h:outputText styleClass="help-block" value="#{msgs.OutletDetails_OUTLET_LOGO_HELP_TEXT}" rendered="#{!outletDetails.outlet.logoSet}"/>
+                            </bootstrap:controlGroup>
+                        </bootstrap:fieldset>
+                    </div>
+
+                    <h:panelGroup layout="block" styleClass="tab-pane" id="tabRateCards">
+                        <h:panelGroup layout="block" id="innerTabRateCards">
+                            <bootstrap:fieldset label="Rate Cards">
+                                <h:outputText value="No rate cards defined for #{outletDetails.outlet.name}. Click &lt;strong&gt;New Rate Card&lt;/strong&gt; on the right side menu to add a Rate Card to #{outletDetails.outlet.name}." escape="false" rendered="#{empty outletDetails.outlet.rateCards}"/>
+                                <h:dataTable id="dtRateCards" value="#{outletDetails.outlet.rateCards}" var="rateCard" class="table table-bordered table-condensed table-striped" rendered="#{!empty outletDetails.outlet.rateCards}">
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        <h:outputText value="#{rateCard.name}" />
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Type</f:facet>
+                                        <h:outputText value="#{rateCard.quoteLineType}" />
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Description</f:facet>
+                                        <h:outputText value="#{rateCard.description}">
+                                            <f:converter converterId="abbreviationDisplay"/>
+                                            <f:attribute name="maxLength" value="30" />
+                                        </h:outputText>
+                                    </h:column>
+
+                                    <h:column headerClass="columns2">
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <h:commandLink actionListener="#{outletDetails.onDeleteRateCard(rateCard)}">
+                                            <f:ajax render=":frmOutletDetailsEdit:innerTabRateCards" />
+                                            <i class="icon-trash" title="Delete"></i>
+                                        </h:commandLink>
+
+                                        <h:commandLink>
+                                            <f:setPropertyActionListener value="#{rateCard}" target="#{outletDetails.rateCard}" />
+                                            <f:ajax render=":frmRateCardDetails:rateCardDetails" onevent="showRateCard"/>
+                                            <i class="icon-zoom-in" title="Open"></i>
+                                        </h:commandLink>
+
+
+                                    </h:column>
+                                </h:dataTable>
+                            </bootstrap:fieldset>
+                            <script>
+                                function showRateCard(e) {
+                                    if (e.status == 'success') {
+                                        $('#frmRateCardDetails\\:rateCardDetails').modal('show');
+                                    }
+                                }
+                            </script>
+
+                            <bootstrap:fieldset label="Bands">
+                                <h:outputText value="No bands defined for #{outletDetails.outlet.name}. Click &lt;strong&gt;New Band&lt;/strong&gt; on the right side menu to add a Band to #{outletDetails.outlet.name}." escape="false" rendered="#{empty outletDetails.outlet.bands}"/>
+                                <h:dataTable id="dtBands" value="#{outletDetails.outlet.bands}" var="band" class="table table-bordered table-condensed table-striped" rendered="#{!empty outletDetails.outlet.bands}">
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        <h:outputText value="#{band.name}" />
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Start</f:facet>
+                                        <h:outputText value="#{band.start}" />
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">End</f:facet>
+                                        <h:outputText value="#{band.end}" />
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Slots</f:facet>
+                                        <h:outputText value="#{band.numberOfSlots}" />
+                                    </h:column>
+
+                                    <h:column headerClass="columns2">
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <h:commandLink actionListener="#{outletDetails.onDeleteBand(band)}">
+                                            <f:ajax render=":frmOutletDetailsEdit:innerTabRateCards" />
+                                            <i class="icon-trash" title="Delete"></i>
+                                        </h:commandLink>
+
+                                        <h:commandLink actionListener="#{outletDetails.onOpenBand(band)}">
+                                            <f:ajax render=":frmBandDetails:bandDetails" onevent="showBandDetails" />
+                                            <i class="icon-zoom-in" title="Open"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </bootstrap:fieldset>
+
+                            <script>
+                                function showBandDetails(e) {
+                                    if (e.status == 'success') {
+                                        $('#frmBandDetails\\:bandDetails').modal('show');
+                                    }
+                                }
+                            </script>
+
+                            <bootstrap:fieldset label="Ad Sizes">
+                                <h:outputText value="No ad sizes defined for #{outletDetails.outlet.name}. Click &lt;strong&gt;New Ad Size&lt;/strong&gt; on the right side menu to add an Ad Size to #{outletDetails.outlet.name}." escape="false" rendered="#{empty outletDetails.outlet.adSizes}"/>
+                                <h:dataTable id="dtAdSizes" value="#{outletDetails.outlet.adSizes}" var="adSize" class="table table-bordered table-condensed table-striped" rendered="#{!empty outletDetails.outlet.adSizes}">
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        <h:outputText value="#{adSize.name}" />
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Description</f:facet>
+                                        <h:outputText value="#{adSize.description}">
+                                            <f:converter converterId="abbreviationDisplay"/>
+                                            <f:attribute name="maxLength" value="30" />
+                                        </h:outputText>
+                                    </h:column>
+
+                                    <h:column headerClass="columns2">
+                                        <f:facet name="header">&nbsp;</f:facet>
+                                        <h:commandLink actionListener="#{outletDetails.onDeleteAdSize(adSize)}">
+                                            <f:ajax render=":frmOutletDetailsEdit:innerTabRateCards" />
+                                            <i class="icon-trash" title="Delete"></i>
+                                        </h:commandLink>
+
+                                        <h:commandLink actionListener="#{outletDetails.onOpenAdSize(adSize)}">
+                                            <f:ajax render=":frmAdSizeDetails:adSizeDetails" onevent="showAdSizeDetails" />
+                                            <i class="icon-zoom-in" title="Open"></i>
+                                        </h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
+                            </bootstrap:fieldset>
+                            <script>
+                                function showAdSizeDetails(e) {
+                                    if (e.status == 'success') {
+                                        $('#frmAdSizeDetails\\:adSizeDetails').modal('show');
+                                    }
+                                }
+                            </script>
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+                </div>
+            </h:panelGroup>
+
+
+            <h:panelGroup styleClass="span3" id="sidebar">
+                <h:panelGroup layout="block">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">Editing</li>
+                        <li>
+                            <h:commandButton styleClass="btn btn-large btn-primary btn-workflow-option" 
+                                             value="#{global.generic_SAVE}" 
+                                             action="#{outletDetails.onSave()}">
+                            </h:commandButton>
+                        </li>
+                        <li>
+                            <h:commandButton styleClass="btn btn-large btn-workflow-option" 
+                                             value="#{global.generic_CANCEL}" immediate="true"
+                                             action="Outlets?faces-redirect=true">
+                            </h:commandButton>
+                        </li>
+                        <li class="nav-header">Rate Cards</li>
+                        <li>
+                            <h:commandLink id="lnkNewRateCard" actionListener="#{outletDetails.onNewRateCard}">
+                                <f:ajax render=":frmNewRateCard" onevent="showNewRateCard" />
+                                <i class="icon-file"></i>New Rate Card
+                            </h:commandLink>
+
+                            <script>
+                                function showNewRateCard(e) {
+                                    if (e.status == 'success') {
+                                        $('#frmNewRateCard\\:newRateCard').modal('show');
+                                    }
+                                }
+                            </script>
+                        </li>
+                        <li>
+                            <h:commandLink id="lnkNewBand">
+                                <f:ajax render=":frmNewBand" onevent="showNewBand" />
+                                <i class="icon-calendar"></i>New Band
+                            </h:commandLink>
+
+                            <script>
+                                function showNewBand(e) {
+                                    if (e.status == 'success') {
+                                        $('#frmNewBand\\:newBand').modal('show');
+                                    }
+                                }
+                            </script>
+                        </li>
+
+                        <li>
+                            <h:commandLink id="lnkNewAdSize">
+                                <f:ajax render=":frmNewAdSize" onevent="showNewAdSize" />
+                                <i class="icon-resize-full"></i>New Ad Size
+                            </h:commandLink>
+
+                            <script>
+                                function showNewAdSize(e) {
+                                    if (e.status == 'success') {
+                                        $('#frmNewAdSize\\:newAdSize').modal('show');
+                                    }
+                                }
+                            </script>
+                        </li>
+
+                    </ul>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+
+        <h:form id="frmNewRateCard">
+            <bootstrap:modal id="newRateCard" title="Rate Card">
+                <label>Name</label>
+                <h:inputText id="rateCardName" styleClass="input-xlarge" value="#{outletDetails.rateCard.name}" />
+
+                <label>Description</label>
+                <h:inputTextarea id="rateCardDescription" 
+                                 styleClass="input-xlarge" 
+                                 value="#{outletDetails.rateCard.description}" />
+
+                <label>Type</label>
+                <h:selectOneMenu id="rateCardType" 
+                                 value="#{outletDetails.rateCard.quoteLineType}">
+                    <f:selectItem itemLabel="Spots" itemValue="Spots" />
+                    <f:selectItem itemLabel="Production" itemValue="Production" />
+                    <f:selectItem itemLabel="Promotions" itemValue="Promotions" />
+                    <f:selectItem itemLabel="Mentions" itemValue="Mentions" />
+                    <f:selectItem itemLabel="Appearances" itemValue="Appearances" />
+                </h:selectOneMenu>
+
+                <label>Simple</label>
+                <h:selectBooleanCheckbox id="simple" value="#{outletDetails.rateCard.simple}" />
+                <p class="help-block">Should the rate card contain a simple list of rates (e.g. production rate card)</p>
+
+                <f:facet name="footer">
+                    <h:commandLink id="btnAddRateCard" class="btn btn-primary" value="#{global.generic_SAVE}" actionListener="#{outletDetails.onAddRateCard()}">
+                        <f:param name="includeViewParams" value="true" />
+                        <f:param name="id" value="#{outletDetails.outletId}"/>
+                        <f:ajax execute="@form" render=":frmOutletDetailsEdit:innerTabRateCards" onevent="onSaveRateCard" />
+                    </h:commandLink>
+
+                    <script>
+                        function onSaveRateCard(e) {
+                            if (e.status == 'success') {
+                                $('#frmNewRateCard\\:newRateCard').modal('hide');
+                            }
+                        }
+                    </script>
+                </f:facet>
+            </bootstrap:modal>
+        </h:form>
+        <co:ajaxIndicator for="frmNewRateCard:newRateCard:btnAddRateCard" target="frmOutletDetailsEdit\\:tabRateCards" />
+
+        <h:form id="frmNewAdSize">
+            <bootstrap:modal id="newAdSize" title="Ad Size">
+                <label>Name</label>
+                <h:inputText id="adSizeName" styleClass="input-xlarge" value="#{outletDetails.adSize.name}" />
+
+                <label>Description</label>
+                <h:inputTextarea id="adSizeDescription" 
+                                 styleClass="input-xlarge" 
+                                 value="#{outletDetails.adSize.description}" />
+
+                <f:facet name="footer">
+                    <h:commandLink id="btnAddAdSize" class="btn btn-primary" value="#{global.generic_SAVE}" actionListener="#{outletDetails.onAddAdSize()}">
+                        <f:param name="includeViewParams" value="true" />
+                        <f:param name="id" value="#{outletDetails.outletId}"/>
+                        <f:ajax execute="@form" render=":frmOutletDetailsEdit:innerTabRateCards" onevent="onSaveAdSize" />
+                    </h:commandLink>
+
+                    <script>
+                        function onSaveAdSize(e) {
+                            if (e.status == 'success') {
+                                $('#frmNewAdSize\\:newAdSize').modal('hide');
+                            }
+                        }
+                    </script>
+                </f:facet>
+            </bootstrap:modal>
+        </h:form>
+        <co:ajaxIndicator for="frmNewAdSize:newAdSize:btnAddAdSize" target="frmOutletDetailsEdit\\:tabRateCards" />
+
+
+        <h:form id="frmAdSizeDetails">
+            <bootstrap:modal id="adSizeDetails" title="#{outletDetails.adSize.name}">
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#frmAdSizeDetails\:adSizeDetails\:tabAdSizeDetails" data-toggle="tab">Details</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <h:panelGroup layout="block" styleClass="tab-pane active" id="tabAdSizeDetails">
+                        <label>Name</label>
+                        <h:inputText id="adSizeName" styleClass="input-xlarge" value="#{outletDetails.adSize.name}" />
+
+                        <label>Description</label>
+                        <h:inputTextarea id="adSizeDescription" 
+                                         styleClass="input-xlarge" 
+                                         value="#{outletDetails.adSize.description}" />
+                    </h:panelGroup>
+                </div>
+
+
+                <f:facet name="footer">
+                    <h:commandLink id="btnUpdateAdSize" class="btn btn-primary" value="Update" actionListener="#{outletDetails.onUpdateAdSize()}">
+                        <f:param name="includeViewParams" value="true" />
+                        <f:param name="id" value="#{outletDetails.outletId}"/>
+                        <f:ajax execute="@form" render=":frmOutletDetailsEdit:innerTabRateCards" onevent="onUpdateAdSize" />
+                    </h:commandLink>
+
+                    <script>
+                        function onUpdateAdSize(e) {
+                            if (e.status == 'success') {
+                                $('#frmAdSizeDetails\\:adSizeDetails').modal('hide');
+                            }
+                        }
+                    </script>
+                </f:facet>
+            </bootstrap:modal>
+        </h:form>
+        <co:ajaxIndicator for="frmAdSizeDetails:adSizeDetails:btnUpdateAdSize" target="frmAdSizeDetails\\:adSizeDetails" />
+
+        <h:form id="frmNewBand">
+            <bootstrap:modal id="newBand" title="Band">
+                <label>Name</label>
+                <h:inputText id="bandName" styleClass="input-xlarge" value="#{outletDetails.band.name}" />
+
+                <label>Description</label>
+                <h:inputTextarea id="bandDescription" 
+                                 styleClass="input-xlarge" 
+                                 value="#{outletDetails.band.description}" />
+
+                <label>Start</label>
+                <h:inputText id="bandStart" styleClass="input-xlarge" value="#{outletDetails.band.start}" />
+
+                <label>End</label>
+                <h:inputText id="bandEnd" styleClass="input-xlarge" value="#{outletDetails.band.end}" />
+
+                <f:facet name="footer">
+                    <h:commandLink id="btnAddBand" class="btn btn-primary" value="#{global.generic_SAVE}" actionListener="#{outletDetails.onAddBand()}">
+                        <f:param name="includeViewParams" value="true" />
+                        <f:param name="id" value="#{outletDetails.outletId}"/>
+                        <f:ajax execute="@form" render=":frmOutletDetailsEdit:innerTabRateCards" onevent="onSaveBand" />
+                    </h:commandLink>
+
+                    <script>
+                        function onSaveBand(e) {
+                            if (e.status == 'success') {
+                                $('#frmNewBand\\:newBand').modal('hide');
+                            }
+                        }
+                    </script>
+                </f:facet>
+            </bootstrap:modal>
+        </h:form>
+        <co:ajaxIndicator for="frmNewBand:newBand:btnAddBand" target="frmOutletDetailsEdit\\:tabRateCards" />
+
+
+        <h:form id="frmBandDetails">
+            <bootstrap:modal id="bandDetails" title="#{outletDetails.band.name}">
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#frmBandDetails\:bandDetails\:tabBandDetails" data-toggle="tab">Details</a>
+                    </li>
+                    <li>
+                        <a href="#frmBandDetails\:bandDetails\:tabBandSlots" data-toggle="tab">Slots</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <h:panelGroup layout="block" styleClass="tab-pane active" id="tabBandDetails">
+                        <label>Name</label>
+                        <h:inputText id="bandName" styleClass="input-xlarge" value="#{outletDetails.band.name}" />
+
+                        <label>Description</label>
+                        <h:inputTextarea id="bandDescription" 
+                                         styleClass="input-xlarge" 
+                                         value="#{outletDetails.band.description}" />
+
+                        <label>Start</label>
+                        <h:inputText id="bandStart" styleClass="input-xlarge" value="#{outletDetails.band.start}" />
+
+                        <label>End</label>
+                        <h:inputText id="bandEnd" styleClass="input-xlarge" value="#{outletDetails.band.end}" />
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="tab-pane" id="tabBandSlots">
+
+                        <h:panelGroup id="bandSlots" layout="block">
+                            <table class="table table-bordered table-condensed table-striped">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                <ui:repeat value="#{outletDetails.band.slots}" var="slot">
+                                    <tr>
+                                        <td><h:inputText value="#{slot.name}" styleClass="input-large" /></td>
+                                        <td><h:inputText value="#{slot.start}" styleClass="input-mini" /></td>
+                                        <td><h:inputText value="#{slot.end}" styleClass="input-mini" /></td>
+                                        <td>
+                                            <h:commandLink actionListener="#{outletDetails.onRemoveBandSlot(slot)}" rendered="#{slot.id != null}">
+                                                <f:ajax execute=":frmBandDetails:bandDetails:bandSlots" render=":frmBandDetails:bandDetails:bandSlots" />
+                                                <i class="icon-trash" title="Delete"></i>
+                                            </h:commandLink>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                                <tr>
+                                    <td colspan="4">
+                                        <i class="icon-plus-sign"></i>
+                                        <h:commandLink value="Add another slot" actionListener="#{outletDetails.onAddBandSlot()}">
+                                            <f:ajax execute="bandSlots" render="bandSlots" />
+                                        </h:commandLink>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+
+                    </h:panelGroup>
+                </div>
+
+
+                <f:facet name="footer">
+                    <h:commandLink id="btnUpdateBand" class="btn btn-primary" value="Update" actionListener="#{outletDetails.onUpdateBand()}">
+                        <f:param name="includeViewParams" value="true" />
+                        <f:param name="id" value="#{outletDetails.outletId}"/>
+                        <f:ajax execute="@form" render=":frmOutletDetailsEdit:innerTabRateCards" onevent="onUpdateBand" />
+                    </h:commandLink>
+
+                    <script>
+                        function onUpdateBand(e) {
+                            if (e.status == 'success') {
+                                $('#frmBandDetails\\:bandDetails').modal('hide');
+                            }
+                        }
+                    </script>
+                </f:facet>
+            </bootstrap:modal>
+        </h:form>
+        <co:ajaxIndicator for="frmBandDetails:bandDetails:btnUpdateBand" target="frmBandDetails\\:bandDetails" />
+
+        <h:form id="frmRateCardDetails">
+            <bootstrap:modal id="rateCardDetails" title="#{outletDetails.rateCard.name}">
+
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#frmRateCardDetails\:rateCardDetails\:tabRateCardPrices" data-toggle="tab">Prices</a>
+                    </li>
+                    <li>
+                        <a href="#frmRateCardDetails\:rateCardDetails\:tabRateCardDetails" data-toggle="tab">Details</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <h:panelGroup layout="block" styleClass="tab-pane active" id="tabRateCardPrices">
+
+
+                        <h:panelGroup layout="block" rendered="#{!outletDetails.rateCard.simple}">
+                            <table class="table table-bordered table-condensed table-striped">
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="text-align: center; font-weight: bold;" colspan="#{outletDetails.outlet.numberOfAdSizes}">Ad Sizes</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight: bold;">Bands</td>
+                                    <ui:repeat value="#{outletDetails.outlet.adSizes}" var="adSize">
+                                        <td title="#{adSize.description}">#{adSize.name}</td>
+                                    </ui:repeat>
+                                </tr>
+                                <ui:repeat value="#{outletDetails.outlet.bands}" var="band">
+                                    <tr>
+                                        <td title="#{band.description}">#{band.name}</td>
+                                        <ui:repeat value="#{outletDetails.outlet.adSizes}" var="adSize">
+                                            <td><h:inputText value="#{outletDetails.rateCardPrice(band, adSize).price}" styleClass="input-mini" /></td>
+                                        </ui:repeat>
+                                    </tr>
+                                </ui:repeat>
+                            </table>
+                        </h:panelGroup>
+
+                        <h:panelGroup id="simpleRateCard" layout="block" rendered="#{outletDetails.rateCard.simple}">
+                            <table class="table table-bordered table-condensed table-striped">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                                <ui:repeat value="#{outletDetails.rateCard.prices}" var="price">
+                                    <tr>
+                                        <td><h:inputText value="#{price.name}" styleClass="input-large" /></td>
+                                        <td><h:inputText value="#{price.price}" styleClass="input-mini" /></td>
+                                        <td>
+                                            <h:commandLink actionListener="#{outletDetails.onRemoveSimpleRateCardPrice(price)}" rendered="#{price.id != null}">
+                                                <f:ajax execute=":frmRateCardDetails:rateCardDetails:simpleRateCard" render=":frmRateCardDetails:rateCardDetails:simpleRateCard" />
+                                                <i class="icon-trash" title="Delete"></i>
+                                            </h:commandLink>
+                                        </td>
+                                    </tr>
+                                </ui:repeat>
+                                <tr>
+                                    <td colspan="3">
+                                        <i class="icon-plus-sign"></i>
+                                        <h:commandLink value="Add another rate" actionListener="#{outletDetails.onAddSimpleRateCardPrice()}">
+                                            <f:ajax execute="simpleRateCard" render="simpleRateCard" />
+                                        </h:commandLink>
+                                    </td>
+                                </tr>
+                            </table>
+                        </h:panelGroup>
+
+                    </h:panelGroup>
+
+
+                    <h:panelGroup layout="block" styleClass="tab-pane" id="tabRateCardDetails">
+
+                        <label>Name</label>
+                        <h:inputText id="bandName" styleClass="input-xlarge" value="#{outletDetails.rateCard.name}" />
+
+                        <label>Description</label>
+                        <h:inputTextarea id="bandDescription" 
+                                         styleClass="input-xlarge" 
+                                         value="#{outletDetails.rateCard.description}" />
+
+                        <label>Simple</label>
+                        <h:selectBooleanCheckbox id="simple" value="#{outletDetails.rateCard.simple}" />
+                        <p class="help-block">Should the rate card contain a simple list of rates (e.g. production rate card)</p>
+                    </h:panelGroup>
+                </div>
+
+
+                <f:facet name="footer">
+                    <h:commandLink id="btnSaveRateCard" class="btn btn-primary" value="#{global.generic_SAVE}" actionListener="#{outletDetails.onSaveRateCard()}">
+                        <f:param name="includeViewParams" value="true" />
+                        <f:param name="id" value="#{outletDetails.outletId}"/>
+                        <f:ajax execute="@form" render=":frmOutletDetailsEdit:innerTabRateCards" onevent="onSaveRateCard" />
+                    </h:commandLink>
+
+                    <script>
+                        function onSaveRateCard(e) {
+                            if (e.status == 'success') {
+                                $('#frmRateCardDetails\\:rateCardDetails').modal('hide');
+                            }
+                        }
+                    </script>
+                </f:facet>
+            </bootstrap:modal>
+        </h:form>
+        <co:ajaxIndicator for="frmRateCardDetails:rateCardDetails:btnSaveRateCard" target="frmOutletDetailsEdit\\:tabRateCards" />
+
+    </ui:define>
+</ui:composition>

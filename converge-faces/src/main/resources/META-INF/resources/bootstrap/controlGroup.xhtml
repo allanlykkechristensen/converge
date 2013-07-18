@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="label" default="" shortDescription="Label of the control group" />
+        <cc:attribute name="styleClass" default="input-xlarge" shortDescription="Style class of the input control" />
+        <cc:attribute name="value" shortDescription="Value of the control group" />
+        <cc:attribute name="type" default="text" shortDescription="Type of control group (text)" />
+        <cc:attribute name="required" default="false" shortDescription="Is the input value required" />
+        <cc:attribute name="requiredMessage" default="" shortDescription="Required message to display if not filled in" />
+        <cc:attribute name="helpText" default="" shortDescription="Help text for the control group" />
+        <cc:attribute name="converter" default="" shortDescription="Converter" />
+        <cc:attribute name="converterMessage" default="" shortDescription="Converter message" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="control-group" id="#{cc.clientId}">
+            <label class="control-label" for="#{cc.clientId}:input">#{cc.attrs.label}</label>
+
+            <c:if test="#{cc.attrs.type == 'radio'}">
+                <h:panelGroup layout="block" styleClass="controls">
+                    <label class="radio">
+                        <h:selectOneRadio id="input" value="#{cc.attrs.value}" layout="pageDirection">
+                            <cc:insertChildren />
+                        </h:selectOneRadio>
+                    </label>                
+                    <p class="help-block">#{cc.attrs.helpText}</p>
+                </h:panelGroup>
+            </c:if>
+
+            <c:if test="#{cc.attrs.type == 'select'}">
+                <h:panelGroup layout="block" styleClass="controls">
+                    <h:selectOneMenu id="input" 
+                                     styleClass="#{cc.attrs.styleClass}"  
+                                     value="#{cc.attrs.value}" 
+                                     required="#{cc.attrs.required}" 
+                                     requiredMessage="#{cc.attrs.requiredMessage}" 
+                                     converter="#{cc.attrs.converter}" 
+                                     converterMessage="#{cc.attrs.converterMessage}">
+                        <cc:insertChildren />
+                    </h:selectOneMenu>
+                    <p class="help-block">#{cc.attrs.helpText}</p>
+                </h:panelGroup>
+            </c:if>
+            
+            <c:if test="#{cc.attrs.type == 'selectManyCheckbox'}">
+                <h:panelGroup layout="block" styleClass="controls">
+                    <h:selectManyCheckbox id="input" 
+                                     styleClass="#{cc.attrs.styleClass}"  
+                                     value="#{cc.attrs.value}" 
+                                     required="#{cc.attrs.required}" 
+                                     requiredMessage="#{cc.attrs.requiredMessage}" 
+                                     converter="#{cc.attrs.converter}" 
+                                     converterMessage="#{cc.attrs.converterMessage}"
+                                     layout="pageDirection">
+                        <cc:insertChildren />
+                    </h:selectManyCheckbox>
+                    <p class="help-block">#{cc.attrs.helpText}</p>
+                </h:panelGroup>
+            </c:if>
+            
+            <c:if test="#{cc.attrs.type == 'selectOneRadio'}">
+                <h:panelGroup layout="block" styleClass="controls">
+                    <h:selectOneRadio id="input" 
+                                     styleClass="#{cc.attrs.styleClass}"  
+                                     value="#{cc.attrs.value}" 
+                                     required="#{cc.attrs.required}" 
+                                     requiredMessage="#{cc.attrs.requiredMessage}" 
+                                     converter="#{cc.attrs.converter}" 
+                                     converterMessage="#{cc.attrs.converterMessage}"
+                                     layout="pageDirection">
+                        <cc:insertChildren />
+                    </h:selectOneRadio>
+                    <p class="help-block">#{cc.attrs.helpText}</p>
+                </h:panelGroup>
+            </c:if>
+
+            <c:if test="#{cc.attrs.type == 'text'}">
+                <h:panelGroup layout="block" styleClass="controls">
+                    <h:inputText id="input" 
+                                 value="#{cc.attrs.value}" 
+                                 styleClass="#{cc.attrs.styleClass}"  
+                                 required="#{cc.attrs.required}" 
+                                 requiredMessage="#{cc.attrs.requiredMessage}" />
+
+                    <p class="help-block">#{cc.attrs.helpText}</p>
+                </h:panelGroup>
+            </c:if>
+
+            <c:if test="#{cc.attrs.type == 'custom'}">
+                <h:panelGroup layout="block" styleClass="controls">
+                    <cc:insertChildren />                    
+                </h:panelGroup>
+            </c:if>
+
+        </div>
+
+    </cc:implementation>
+</html>

@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="./templates/master.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:co="http://i2m.dk/jsf/converge"
+                xmlns:bootstrap="http://i2m.dk/jsf/bootstrap"
+                xmlns:h2="http://i2m.dk/jsf/html"
+                xmlns:core="http://java.sun.com/jsf/composite/components/core">
+
+    <ui:param name="menu" value="workflows" />
+    
+    <ui:define name="title">#{msgs.Workflows_TITLE}</ui:define>
+    
+    <ui:define name="pageMenu">
+        <h:panelGroup styleClass="span2" layout="span">
+            <h:form id="frmPageMenu">
+                <div class="sidebar-nav">
+                    <ul class="nav nav-list">
+                        <li class="nav-header">
+                            #{msgs.Workflows_SUBMENU_OPTIONS}
+                        </li>
+                        <li>
+                            <h:commandLink id="lnkNewWorkflow" action="WorkflowDefinitionDetails?faces-redirect=true" immediate="true">
+                                <i class="icon-file"></i>
+                                #{msgs.Workflows_OPTION_NEW_WORKFLOW}
+                            </h:commandLink>
+                        </li>
+                    </ul>    
+                </div>
+            </h:form>
+        </h:panelGroup>
+    </ui:define>
+    
+    <ui:define name="body">
+        <h:panelGroup id="pageContent" styleClass="span9 well" layout="span">
+            <h2 id="pageTitle">#{msgs.Workflows_WORKFLOWS}</h2>
+            <h:form id="frmWorkflows">
+                <bootstrap:messages />
+                <h:dataTable id="tblWorkflows" value="#{workflows.workflows}" var="workflow" styleClass="table table-striped table-bordered table-condensed" rendered="#{workflows.workflows.rowCount > 0}">
+                    <h:column headerClass="workflow-definition-id-column">
+                        <f:facet name="header">#{msgs.Workflows_WORKFLOWS_COLUMN_ID}</f:facet>
+                        <h:button outcome="WorkflowDefinitionDetails" value="#{workflow.id}" styleClass="btn">
+                            <f:param name="workflow_definition_id" value="#{workflow.id}" />
+                        </h:button>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{msgs.Workflows_WORKFLOWS_COLUMN_NAME}</f:facet>
+                        <h:outputText value="#{workflow.name}" />
+                    </h:column>
+                </h:dataTable>
+
+                <h:outputText value="#{msgs.Workflows_NO_WORKFLOWS_AVAILABLE}" rendered="#{workflows.workflows.rowCount == 0}"/>
+
+                <script>
+                    $(document).ready(function() {
+                        // Intialises the quote table as a jQuery DataTable
+                        $('#frmWorkflows\\:tblWorkflows').dataTable( {
+                            "sPaginationType": "bootstrap",
+                            "oLanguage": {
+                                "sLengthMenu": "#{msgs.Workflows_X_WORKFLOWS_PER_PAGE}"
+                            }
+                        } );
+                    });
+                </script>
+
+            </h:form>
+        </h:panelGroup>
+    </ui:define>
+</ui:composition>

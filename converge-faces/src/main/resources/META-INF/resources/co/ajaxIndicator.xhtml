@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+
+    <!-- INTERFACE -->
+    <cc:interface shortDescription="Show a loading indicator during ajax requests">  
+        <cc:attribute name="for" required="true" shortDescription="Full ID of the component to monitor for Ajax requests" />
+        <cc:attribute name="target" required="true" shortDescription="Full ID of the component to overlay during Ajax requests" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div id="#{cc.clientId}">
+            <h:outputScript name="jsf.js" library="javax.faces" target="head"/>
+            <h:outputScript name="ajaxIndicator.js" library="co/ajaxIndicator" target="head"/>
+            <h:outputStylesheet name="ajaxIndicator.css" library="co/ajaxIndicator" />
+
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    ajaxIndicator.init("#{cc.clientId}", "#{cc.attrs.target}", "#{cc.attrs.for}");
+                });
+            </script>
+
+            <h:panelGroup id="overlay" styleClass="ajax-indicator-overlay" layout="block">
+                <h:graphicImage name="ajaxIndicator.gif" library="co/ajaxIndicator" height="48" width="48" />
+            </h:panelGroup>
+        </div>
+
+    </cc:implementation>
+</html>
