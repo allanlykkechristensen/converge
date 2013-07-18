@@ -18,6 +18,7 @@ package com.getconverge.faces.functions;
 
 import dk.i2m.converge.faces.functions.ListToMap;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,11 +84,13 @@ public class ListToMapTest {
         assertTrue(result.containsKey("DomainTestObject: #3"));
     }
 
-    @Test(expected = Exception.class)
-    public void listToMap_utilityClass_uninstantiable() throws Exception {
-        Constructor<ListToMap> c = ListToMap.class.getDeclaredConstructor();
-        c.setAccessible(true);
-        c.newInstance();
+    @Test()
+    public void listToMap_utilityClass_uninstantiable() {
+        final Constructor<?>[] c = ListToMap.class.getDeclaredConstructors();
+
+        for (Constructor<?> constructor : c) {
+            assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        }
     }
 
     public class DomainTestObject {
