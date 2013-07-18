@@ -16,7 +16,6 @@
  */
 package com.getconverge.faces.functions;
 
-import dk.i2m.converge.faces.functions.ListToMap;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
