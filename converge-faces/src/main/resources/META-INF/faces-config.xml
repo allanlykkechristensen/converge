@@ -7,7 +7,7 @@
 
     <application>
         <resource-bundle>
-            <base-name>dk.i2m.converge.faces.i18n.Messages</base-name>
+            <base-name>com.getconverge.faces.i18n.Messages</base-name>
             <var>global</var>
         </resource-bundle>
     </application>

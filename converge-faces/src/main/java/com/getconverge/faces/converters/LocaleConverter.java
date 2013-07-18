@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Interactive Media Management
+ * Copyright (C) 2009 - 2013 Converge Consulting
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dk.i2m.converge.faces.converters;
+package com.getconverge.faces.converters;
 
 import java.util.Locale;
 import javax.faces.component.UIComponent;
@@ -30,16 +30,14 @@ import org.apache.commons.lang3.LocaleUtils;
  */
 public class LocaleConverter implements Converter {
 
-    public Object getAsObject(FacesContext ctx, UIComponent comp, String value)
-            throws ConverterException {
+    public Object getAsObject(FacesContext ctx, UIComponent comp, String value) throws ConverterException {
         String localeValue = value.replaceAll("-", "_");
 
         Locale locale = LocaleUtils.toLocale(localeValue);
         return locale;
     }
 
-    public String getAsString(FacesContext ctx, UIComponent comp, Object obj)
-            throws ConverterException {
+    public String getAsString(FacesContext ctx, UIComponent comp, Object obj) throws ConverterException {
         Locale locale = (Locale) obj;
         return locale.toString();
     }

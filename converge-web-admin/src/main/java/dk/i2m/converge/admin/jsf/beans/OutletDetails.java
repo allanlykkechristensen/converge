@@ -23,7 +23,7 @@ import dk.i2m.converge.ejb.facades.QuoteFacadeLocal;
 import dk.i2m.converge.ejb.services.ConfigurationKey;
 import dk.i2m.converge.ejb.services.ConfigurationServiceLocal;
 import dk.i2m.converge.ejb.services.DataNotFoundException;
-import dk.i2m.converge.faces.JsfUtils;
+import com.getconverge.faces.JsfUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;

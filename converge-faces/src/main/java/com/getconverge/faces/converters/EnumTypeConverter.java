@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 Interactive Media Management
+ * Copyright (C) 2009 - 2013 Converge Consulting
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dk.i2m.converge.faces.converters;
+package com.getconverge.faces.converters;
 
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -27,25 +27,20 @@ import javax.faces.convert.FacesConverter;
  *
  * @author Allan Lykke Christensen
  */
-@FacesConverter(value="enumTypeConverter")
+@FacesConverter(value = "enumTypeConverter")
 public class EnumTypeConverter implements Converter {
 
     /**
      * Converts the string representation of the enumeration to the enumeration
      * type.
      *
-     * @param ctx
-     *          Faces context
-     * @param comp
-     *          Component using the converter
-     * @param value
-     *          Value to convert
+     * @param ctx Faces context
+     * @param comp Component using the converter
+     * @param value Value to convert
      * @return Enumeration type matching the <code>value</code>
-     * @throws javax.faces.convert.ConverterException
-     *          If the conversion failed
+     * @throws javax.faces.convert.ConverterException If the conversion failed
      */
-    public Object getAsObject(FacesContext ctx, UIComponent comp, String value)
-            throws ConverterException {
+    public Object getAsObject(FacesContext ctx, UIComponent comp, String value) throws ConverterException {
         Class enumType = comp.getValueBinding("value").getType(ctx);
         return Enum.valueOf(enumType, value);
     }
@@ -53,18 +48,13 @@ public class EnumTypeConverter implements Converter {
     /**
      * Converts the enumeration type to a unique string representation.
      *
-     * @param ctx
-     *          Faces context
-     * @param comp
-     *          Component using the converter
-     * @param obj
-     *          Object to convert
+     * @param ctx Faces context
+     * @param comp Component using the converter
+     * @param obj Object to convert
      * @return String representation of the enumeration type
-     * @throws javax.faces.convert.ConverterException
-     *          If the conversion failed
+     * @throws javax.faces.convert.ConverterException If the conversion failed
      */
-    public String getAsString(FacesContext ctx, UIComponent comp, Object obj)
-            throws ConverterException {
+    public String getAsString(FacesContext ctx, UIComponent comp, Object obj) throws ConverterException {
         if (obj == null) {
             return null;
         }

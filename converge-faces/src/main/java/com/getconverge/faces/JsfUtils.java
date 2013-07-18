@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012 Interactive Media Management
+ * Copyright (C) 2013 Converge Consulting
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dk.i2m.converge.faces;
+package com.getconverge.faces;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -30,15 +30,14 @@ import javax.faces.context.FacesContext;
 public class JsfUtils {
 
     /**
-     * Obtain a message from a {@link ResourceBundle} defined in 
+     * Obtain a message from a {@link ResourceBundle} defined in
      * {@code faces-config.xml}.
-     * 
-     * @param resourceBundleId
-     *          Unique identifier of the {@link ResourceBundle}
-     * @param msgKey
-     *          Key of the message to retrieve in the {@link ResourceBundle}
-     * @return The message from the given {@link ResourceBundle}, or if the 
-     *         message was not found the {@code msgKey} is returned
+     *
+     * @param resourceBundleId Unique identifier of the {@link ResourceBundle}
+     * @param msgKey Key of the message to retrieve in the
+     * {@link ResourceBundle}
+     * @return The message from the given {@link ResourceBundle}, or if the
+     * message was not found the {@code msgKey} is returned
      */
     public static String getString(String resourceBundleId, String msgKey) {
         FacesContext ctx = FacesContext.getCurrentInstance();
@@ -55,13 +54,11 @@ public class JsfUtils {
     /**
      * Creates a {@link FacesMessage} using the given {@link ResourceBundle} and
      * message key.
-     * 
-     * @param severity
-     *          Severity of the {@link FacesMessage}
-     * @param bundle
-     *          Unique identifier of the {@link ResourceBundle}
-     * @param msgKey 
-     *          Key of the message to retrieve in the {@link ResourceBundle}
+     *
+     * @param severity Severity of the {@link FacesMessage}
+     * @param bundle Unique identifier of the {@link ResourceBundle}
+     * @param msgKey Key of the message to retrieve in the
+     * {@link ResourceBundle}
      */
     public static void createFacesMessage(FacesMessage.Severity severity, String bundle, String msgKey) {
         createFacesMessage(severity, bundle, msgKey, new Object[]{});
@@ -70,34 +67,27 @@ public class JsfUtils {
     /**
      * Creates a {@link FacesMessage} using the given {@link ResourceBundle} and
      * message key.
-     * 
-     * @param severity
-     *          Severity of the {@link FacesMessage}
-     * @param bundle
-     *          Unique identifier of the {@link ResourceBundle}
-     * @param msgKey 
-     *          Key of the message to retrieve in the {@link ResourceBundle}
-     * @param parameters
-     *          Parameters to merge into the message
+     *
+     * @param severity Severity of the {@link FacesMessage}
+     * @param bundle Unique identifier of the {@link ResourceBundle}
+     * @param msgKey Key of the message to retrieve in the
+     * {@link ResourceBundle}
+     * @param parameters Parameters to merge into the message
      */
     public static void createFacesMessage(FacesMessage.Severity severity, String bundle, String msgKey, Object[] parameters) {
         createFacesMessage(null, severity, bundle, msgKey, parameters);
     }
-    
+
     /**
      * Creates a {@link FacesMessage} using the given {@link ResourceBundle} and
      * message key.
-     * 
-     * @param clientId
-     *          Client for which to attach the message
-     * @param severity
-     *          Severity of the {@link FacesMessage}
-     * @param bundle
-     *          Unique identifier of the {@link ResourceBundle}
-     * @param msgKey 
-     *          Key of the message to retrieve in the {@link ResourceBundle}
-     * @param parameters
-     *          Parameters to merge into the message
+     *
+     * @param clientId Client for which to attach the message
+     * @param severity Severity of the {@link FacesMessage}
+     * @param bundle Unique identifier of the {@link ResourceBundle}
+     * @param msgKey Key of the message to retrieve in the
+     * {@link ResourceBundle}
+     * @param parameters Parameters to merge into the message
      */
     public static void createFacesMessage(String clientId, FacesMessage.Severity severity, String bundle, String msgKey, Object[] parameters) {
         FacesContext ctx = FacesContext.getCurrentInstance();

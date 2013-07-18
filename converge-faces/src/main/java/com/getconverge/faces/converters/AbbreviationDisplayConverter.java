@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2009 - 2012 Interactive Media Management
+ * Copyright (C) 2009 - 2013 Converge Consulting
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dk.i2m.converge.faces.converters;
+package com.getconverge.faces.converters;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -41,15 +41,13 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author Allan Lykke Christensen
  */
-@FacesConverter(value="abbreviationDisplay")
+@FacesConverter(value = "abbreviationDisplay")
 public class AbbreviationDisplayConverter implements Converter {
 
-    private static Logger LOG = Logger.getLogger(
-            AbbreviationDisplayConverter.class.getName());
-
+    private static Logger LOG = Logger.getLogger(AbbreviationDisplayConverter.class.getName());
     private static final String MAX_LENGTH = "maxLength";
 
-    public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+    public Object getAsObject(FacesContext ctx, UIComponent comp, String value) {
         return null;
     }
 

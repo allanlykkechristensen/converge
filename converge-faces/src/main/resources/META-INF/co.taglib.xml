@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facelettaglibrary_2_0.xsd"
                 version="2.0">
                     
-    <namespace>http://i2m.dk/jsf/converge</namespace>
+    <namespace>http://getconverge.com/jsf/converge</namespace>
     <composite-library-name>co</composite-library-name>
-    <description>Set of JSF 2 components used for implementing Converge applications</description>
+    <description>JSF 2 components used for implementing Converge web applications</description>
 </facelet-taglib>

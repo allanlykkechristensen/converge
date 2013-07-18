@@ -20,7 +20,7 @@ import dk.i2m.converge.ejb.entities.workflow.WorkflowDefinition;
 import dk.i2m.converge.ejb.entities.workflow.WorkflowState;
 import dk.i2m.converge.ejb.facades.WorkflowFacadeLocal;
 import dk.i2m.converge.ejb.services.DataNotFoundException;
-import dk.i2m.converge.faces.JsfUtils;
+import com.getconverge.faces.JsfUtils;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
