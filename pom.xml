@@ -26,8 +26,18 @@
             <url>scpexe://m2.i2m.dk:/var/www/m2.i2m.dk</url>
         </repository>
     </distributionManagement>
-
+    
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>2.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
