@@ -17,6 +17,7 @@
 package com.getconverge.faces.functions;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,27 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class ListToMapTest {
+
+    @Test
+    public void listToMap_uninstantiable() {
+        try {
+            Constructor<ListToMap> constructor = ListToMap.class.getDeclaredConstructor(new Class[0]);
+            constructor.setAccessible(true);
+            ListToMap l = constructor.newInstance(new Object[0]);
+        } catch (NoSuchMethodException ex) {
+            fail(ex.getMessage());
+        } catch (SecurityException ex) {
+            fail(ex.getMessage());
+        } catch (InstantiationException ex) {
+            fail(ex.getMessage());
+        } catch (IllegalAccessException ex) {
+            fail(ex.getMessage());
+        } catch (IllegalArgumentException ex) {
+            fail(ex.getMessage());
+        } catch (InvocationTargetException ex) {
+            //Expected - as the class is uninstantiable
+        }
+    }
 
     @Test
     public void listToMap_nullList_zeroElements() {
