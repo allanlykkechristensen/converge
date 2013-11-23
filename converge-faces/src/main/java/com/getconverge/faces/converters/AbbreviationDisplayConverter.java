@@ -44,8 +44,11 @@ import org.apache.commons.lang3.StringUtils;
 @FacesConverter(value = "abbreviationDisplay")
 public class AbbreviationDisplayConverter implements Converter {
 
-    private static Logger LOG = Logger.getLogger(AbbreviationDisplayConverter.class.getName());
-    private static final String MAX_LENGTH = "maxLength";
+    private static final Logger LOG = Logger.getLogger(AbbreviationDisplayConverter.class.getName());
+    /**
+     * Name of the attribute where the max length is stored.
+     */
+    public static final String ATTRIBUTE_MAX_LENGTH = "maxLength";
 
     public Object getAsObject(FacesContext ctx, UIComponent comp, String value) {
         return null;
@@ -55,8 +58,8 @@ public class AbbreviationDisplayConverter implements Converter {
         if (value instanceof String) {
             String originalValue = (String) value;
             Map<String, Object> attrs = comp.getAttributes();
-            if (attrs.containsKey(MAX_LENGTH)) {
-                Object objMaxLength = attrs.get(MAX_LENGTH);
+            if (attrs.containsKey(ATTRIBUTE_MAX_LENGTH)) {
+                Object objMaxLength = attrs.get(ATTRIBUTE_MAX_LENGTH);
                 if (objMaxLength instanceof String) {
                     String maxLength = (String) objMaxLength;
 
@@ -64,17 +67,17 @@ public class AbbreviationDisplayConverter implements Converter {
                         return StringUtils.abbreviate(originalValue,
                                 Integer.valueOf(maxLength));
                     } catch (NumberFormatException ex) {
-                        LOG.warning("Attribute '" + MAX_LENGTH
+                        LOG.warning("Attribute '" + ATTRIBUTE_MAX_LENGTH
                                 + "' must contain a String with a numeric value");
                         return originalValue;
                     }
                 } else {
-                    LOG.warning("Attribute '" + MAX_LENGTH
+                    LOG.warning("Attribute '" + ATTRIBUTE_MAX_LENGTH
                             + "' must contain a String with a numeric value");
                     return originalValue;
                 }
             } else {
-                LOG.warning("Attribute '" + MAX_LENGTH + "' is missing");
+                LOG.warning("Attribute '" + ATTRIBUTE_MAX_LENGTH + "' is missing");
                 return originalValue;
             }
         } else {
