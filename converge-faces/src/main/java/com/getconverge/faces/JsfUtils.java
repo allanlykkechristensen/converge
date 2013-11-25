@@ -29,6 +29,11 @@ import javax.faces.context.FacesContext;
  */
 public class JsfUtils {
 
+    private JsfUtils() {
+        // Hide constructor, shouldn't be instantiated
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Obtain a message from a {@link ResourceBundle} defined in
      * {@code faces-config.xml}.
