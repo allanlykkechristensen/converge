@@ -69,6 +69,8 @@
     </build>
     
     <modules>
+        <module>converge-ear</module>
+        <module>converge-ejb</module>
     </modules>
     
     <reporting>
