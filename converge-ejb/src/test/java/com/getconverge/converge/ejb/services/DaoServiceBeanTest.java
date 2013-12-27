@@ -18,6 +18,8 @@ package com.getconverge.converge.ejb.services;
 
 import com.getconverge.converge.entities.Configuration;
 import com.getconverge.converge.entities.ConfigurationKey;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -111,17 +113,28 @@ public class DaoServiceBeanTest {
     @Test
     public void daoService_deleteEntityWithNullId_NoChange() throws Exception {
         // Assign
-        Configuration addedEntity = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
-        addedEntity = daoService.findById(Configuration.class, addedEntity.getId());
+        Object nullId = null;
 
-        // Act
-        daoService.delete(Configuration.class, null);
-
-        // Assert
+        // Act & Assert
         try {
-            daoService.findById(Configuration.class, addedEntity.getId());
+            daoService.delete(Configuration.class, nullId);
+            fail("Expected a DataNotFoundException upon deleting entity with null id");
         } catch (DataNotFoundException ex) {
-            fail("Entity was unexpectedly deleted");
+
+        }
+    }
+
+    @Test
+    public void daoService_deleteEntityWithUnknownId_NoChange() {
+        // Assign
+        Long unknownId = 999L;
+
+        // Act & Assert
+        try {
+            daoService.delete(Configuration.class, unknownId);
+            fail("Expected a DataNotFoundException upon deleting non-existing entity");
+        } catch (DataNotFoundException ex) {
+
         }
     }
 

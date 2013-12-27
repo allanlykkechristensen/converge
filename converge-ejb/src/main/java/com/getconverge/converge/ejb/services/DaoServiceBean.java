@@ -88,14 +88,18 @@ public class DaoServiceBean {
      *
      * @param type Type of object
      * @param id Unique identifier of the object
+     * @throws DataNotFoundException If the object to be deleted does not exist
      */
-    public void delete(Class type, Object id) {
+    public void delete(Class type, Object id) throws DataNotFoundException {
         if (id == null) {
-            return;
+            throw new DataNotFoundException("Cannot delete entity with null id");
         }
         Object objectToDelete = this.em.find(type, id);
         if (objectToDelete != null) {
             this.em.remove(objectToDelete);
+        } else {
+            throw new DataNotFoundException(type.getName()
+                    + " with ID [" + id + "] does not exist");
         }
     }
 
