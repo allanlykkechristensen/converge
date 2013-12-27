@@ -314,18 +314,6 @@ public class DaoServiceBean {
     }
 
     /**
-     * Finds a {@link List} of entities returned from the given native SQL
-     * query.
-     *
-     * @param sql Native SQL query
-     * @param type Type of entity
-     * @return {@link List} of entities returned from the given native SQL query
-     */
-    public List findByNativeQuery(String sql, Class type) {
-        return this.em.createNativeQuery(sql, type).getResultList();
-    }
-
-    /**
      * Finds all the entities of a given type.
      *
      * @param <T> Type of entity
