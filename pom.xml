@@ -6,7 +6,10 @@
     <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Converge</name>
-    
+    <ciManagement>
+        <system>hudson</system>
+        <url>http://ci.getconverge.com:8585/job/Converge%203/</url>
+    </ciManagement>
     <organization>
         <name>Converge Consulting</name>
         <url>http://www.getconverge.com</url>
