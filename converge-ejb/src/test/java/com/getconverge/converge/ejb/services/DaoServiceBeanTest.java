@@ -18,9 +18,8 @@ package com.getconverge.converge.ejb.services;
 
 import com.getconverge.converge.entities.Configuration;
 import com.getconverge.converge.entities.ConfigurationKey;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -164,6 +163,86 @@ public class DaoServiceBeanTest {
         } catch (DataNotFoundException ex) {
 
         }
+    }
+
+    @Test
+    public void daoService_getEntityManager_EntityManagerReturned() throws Exception {
+        // Assign
+
+        // Act
+        EntityManager entityManager = daoService.getEntityManager();
+
+        // Assert
+        assertNotNull(entityManager);
+    }
+
+    @Test
+    public void daoService_createAndUpdateEntity_EntityUpdated() throws Exception {
+        // Assign
+        Configuration newEntity = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+        newEntity = daoService.findById(Configuration.class, newEntity.getId());
+        String newValue = "en";
+        newEntity.setValue(newValue);
+
+        // Act
+        Configuration updatedEntity = daoService.update(newEntity);
+
+        // Assert
+        assertEquals(newEntity.getId(), updatedEntity.getId());
+        assertEquals(newEntity.getKey(), updatedEntity.getKey());
+        assertEquals(newValue, updatedEntity.getValue());
+    }
+
+    @Test
+    public void daoService_noEntities_countIsZero() throws Exception {
+        // Assign
+
+        // Act
+        Number count = daoService.count(Configuration.class, "id");
+
+        // Assert
+        assertEquals(0L, count);
+    }
+
+    @Test
+    public void daoService_oneEntity_countIsOne() throws Exception {
+        // Assign
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        Number count = daoService.count(Configuration.class, "id");
+
+        // Assert
+        assertEquals(1L, count);
+    }
+    
+    @Test
+    public void daoService_threeEntities_countIsThree() throws Exception {
+        // Assign
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+
+        // Act
+        Number count = daoService.count(Configuration.class, "id");
+
+        // Assert
+        assertEquals(3L, count);
+    }
+    
+    @Test
+    public void daoService_threeEntitiesOneDeleted_countIsTwo() throws Exception {
+        // Assign
+        Configuration toBeDeleted = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.delete(Configuration.class, toBeDeleted.getId());
+
+        // Act
+        Number count = daoService.count(Configuration.class, "id");
+
+        // Assert
+        assertEquals(2L, count);
     }
 
 }
