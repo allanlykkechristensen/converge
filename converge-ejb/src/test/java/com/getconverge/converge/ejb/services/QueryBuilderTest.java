@@ -22,8 +22,8 @@ import static org.junit.Assert.*;
 public class QueryBuilderTest {
 
     @Test
-    public void queryBuilder_emptyWithParameter_OneParameterAvailable() {
-        // Assign
+    public void queryBuilder_emptyWithParameter_oneParameterAvailable() {
+        // Arrange
         String parameterKey = "paramkey";
         String parameterValue = "paramvalue";
 
@@ -37,8 +37,8 @@ public class QueryBuilderTest {
     }
 
     @Test
-    public void queryBuilder_emptyWithParameterAndAnotherParameter_TwoParametersAvailable() {
-        // Assign
+    public void queryBuilder_emptyWithParameterAndAnotherParameter_twoParametersAvailable() {
+        // Arrange
         String parameterKey1 = "paramkey1";
         String parameterValue1 = "paramvalue1";
         String parameterKey2 = "paramkey2";
@@ -57,8 +57,8 @@ public class QueryBuilderTest {
     }
 
     @Test
-    public void queryBuilder_emptyWithParameterAndAnotherParameterWithAnotherParameter_OneParameterAvailable() {
-        // Assign
+    public void queryBuilder_emptyWithParameterAndAnotherParameterWithAnotherParameter_oneParameterAvailable() {
+        // Arrange
         String parameterKey1 = "paramkey1";
         String parameterValue1 = "paramvalue1";
         String parameterKey2 = "paramkey2";

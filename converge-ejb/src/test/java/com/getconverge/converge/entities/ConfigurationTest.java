@@ -22,8 +22,8 @@ import static org.junit.Assert.*;
 public class ConfigurationTest {
 
     @Test
-    public void configuration_twoConfigurationsWithSameId_EqualsTrue() {
-        // Assign
+    public void configuration_twoConfigurationsWithSameId_equalsTrue() {
+        // Arrange
         Configuration cfg1 = new Configuration();
         cfg1.setId(1L);
         cfg1.setKey(ConfigurationKey.COUNTRY);
@@ -42,8 +42,8 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void configuration_twoConfigurationsWithDifferentId_EqualsFalse() {
-        // Assign
+    public void configuration_twoConfigurationsWithDifferentId_equalsFalse() {
+        // Arrange
         Configuration cfg1 = new Configuration();
         cfg1.setId(1L);
         cfg1.setKey(ConfigurationKey.COUNTRY);
@@ -62,8 +62,8 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void configuration_twoConfigurationsWithDifferentIdOneIsNull_EqualsFalse() {
-        // Assign
+    public void configuration_twoConfigurationsWithDifferentIdOneIsNull_equalsFalse() {
+        // Arrange
         Configuration cfg1 = new Configuration();
         cfg1.setId(null);
         cfg1.setKey(ConfigurationKey.COUNTRY);
@@ -82,8 +82,8 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void configuration_oneConfigurationOneNonConfiguration_EqualsFalse() {
-        // Assign
+    public void configuration_oneConfigurationOneNonConfiguration_equalsFalse() {
+        // Arrange
         Configuration cfg1 = new Configuration();
         cfg1.setId(1L);
         cfg1.setKey(ConfigurationKey.COUNTRY);
@@ -99,8 +99,8 @@ public class ConfigurationTest {
     }
 
     @Test
-    public void configuration_ConfigurationWithId_toStringIsUniform() {
-        // Assign
+    public void configuration_configurationWithId_toStringIsUniform() {
+        // Arrange
         Configuration cfg = new Configuration();
         cfg.setId(1L);
         cfg.setKey(ConfigurationKey.COUNTRY);

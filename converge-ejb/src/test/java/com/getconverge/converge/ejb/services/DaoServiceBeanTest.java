@@ -58,8 +58,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_createNewEntity_EntityCreated() throws Exception {
-        // Assign
+    public void daoService_createNewEntity_entityCreated() throws Exception {
+        // Arrange
         ConfigurationKey key = ConfigurationKey.CONVERGE_HOME_URL;
         String value = "http://localhost/converge";
         Configuration cfg = new Configuration();
@@ -76,8 +76,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_findExistingEntity_EntityFound() throws Exception {
-        // Assign
+    public void daoService_findExistingEntity_entityFound() throws Exception {
+        // Arrange
         Configuration firstEntity = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
         daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
         daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
@@ -92,8 +92,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_deleteExistingEntity_EntityDeleted() throws Exception {
-        // Assign
+    public void daoService_deleteExistingEntity_entityDeleted() throws Exception {
+        // Arrange
         Configuration addedEntity = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
         addedEntity = daoService.findById(Configuration.class, addedEntity.getId());
 
@@ -110,8 +110,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_deleteEntityWithNullId_NoChange() throws Exception {
-        // Assign
+    public void daoService_deleteEntityWithNullId_noChange() throws Exception {
+        // Arrange
         Object nullId = null;
 
         // Act & Assert
@@ -124,8 +124,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_deleteEntityWithUnknownId_NoChange() {
-        // Assign
+    public void daoService_deleteEntityWithUnknownId_noChange() {
+        // Arrange
         Long unknownId = 999L;
 
         // Act & Assert
@@ -138,8 +138,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_findNonExistingEntity_DataNotFoundException() throws Exception {
-        // Assign
+    public void daoService_findNonExistingEntity_dataNotFoundException() throws Exception {
+        // Arrange
         Long unknownId = 999L;
 
         // Act & Assert
@@ -152,8 +152,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_findEntityWithNullId_DataNotFoundException() throws Exception {
-        // Assign
+    public void daoService_findEntityWithNullId_dataNotFoundException() throws Exception {
+        // Arrange
         Long nullId = null;
 
         // Act & Assert
@@ -166,8 +166,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_getEntityManager_EntityManagerReturned() throws Exception {
-        // Assign
+    public void daoService_getEntityManager_entityManagerReturned() throws Exception {
+        // Arrange
 
         // Act
         EntityManager entityManager = daoService.getEntityManager();
@@ -177,8 +177,8 @@ public class DaoServiceBeanTest {
     }
 
     @Test
-    public void daoService_createAndUpdateEntity_EntityUpdated() throws Exception {
-        // Assign
+    public void daoService_createAndUpdateEntity_entityUpdated() throws Exception {
+        // Arrange
         Configuration newEntity = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
         newEntity = daoService.findById(Configuration.class, newEntity.getId());
         String newValue = "en";
@@ -195,7 +195,7 @@ public class DaoServiceBeanTest {
 
     @Test
     public void daoService_noEntities_countIsZero() throws Exception {
-        // Assign
+        // Arrange
 
         // Act
         Number count = daoService.count(Configuration.class, "id");
@@ -206,7 +206,7 @@ public class DaoServiceBeanTest {
 
     @Test
     public void daoService_oneEntity_countIsOne() throws Exception {
-        // Assign
+        // Arrange
         daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
 
         // Act
@@ -232,7 +232,7 @@ public class DaoServiceBeanTest {
     
     @Test
     public void daoService_threeEntitiesOneDeleted_countIsTwo() throws Exception {
-        // Assign
+        // Arrange
         Configuration toBeDeleted = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
         daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
         daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));

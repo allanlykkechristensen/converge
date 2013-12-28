@@ -54,8 +54,8 @@ public class ConfigurationDaoTest {
     }
 
     @Test
-    public void configuration_queryFindByExistingKey_EntityFound() throws Exception {
-        // Assign
+    public void configuration_queryFindByExistingKey_entityFound() throws Exception {
+        // Arrange
         Configuration firstEntity = daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
         daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
         daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
