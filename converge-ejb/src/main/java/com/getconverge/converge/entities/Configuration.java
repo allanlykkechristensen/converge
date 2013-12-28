@@ -74,6 +74,13 @@ public class Configuration implements Serializable {
     public Configuration() {
     }
 
+    /**
+     * Creates a new instance of {@link Configuration} with the key and value
+     * preset.
+     *
+     * @param key Unique key of the configuration
+     * @param value Value to store in the configuration key
+     */
     public Configuration(ConfigurationKey key, String value) {
         this.key = key;
         this.value = value;

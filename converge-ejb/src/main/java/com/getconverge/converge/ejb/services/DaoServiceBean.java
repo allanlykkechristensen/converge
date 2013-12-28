@@ -135,12 +135,19 @@ public class DaoServiceBean {
         return query.executeUpdate();
     }
 
+    /**
+     * Executes a custom query on the database and returns the number of records
+     * affected.
+     *
+     * @param query Custom query to execute
+     * @return Number of affected records
+     */
     public int executeQuery(String query) {
         return this.em.createQuery(query).executeUpdate();
     }
 
     /**
-     * Executes a query on the database and returns the number of records
+     * Executes a named query on the database and returns the number of records
      * affected.
      *
      * @param namedQueryName Name of the Named Query
