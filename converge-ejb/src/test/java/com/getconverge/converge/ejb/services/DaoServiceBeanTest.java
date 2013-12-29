@@ -18,6 +18,7 @@ package com.getconverge.converge.ejb.services;
 
 import com.getconverge.converge.entities.Configuration;
 import com.getconverge.converge.entities.ConfigurationKey;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -215,7 +216,7 @@ public class DaoServiceBeanTest {
         // Assert
         assertEquals(1L, count);
     }
-    
+
     @Test
     public void daoService_threeEntities_countIsThree() throws Exception {
         // Assign
@@ -229,7 +230,7 @@ public class DaoServiceBeanTest {
         // Assert
         assertEquals(3L, count);
     }
-    
+
     @Test
     public void daoService_threeEntitiesOneDeleted_countIsTwo() throws Exception {
         // Arrange
@@ -243,6 +244,115 @@ public class DaoServiceBeanTest {
 
         // Assert
         assertEquals(2L, count);
+    }
+
+    @Test
+    public void daoService_findAllWithZeroEntities_emptyList() throws Exception {
+        // Arrange
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class);
+
+        // Assert
+        assertEquals(0L, entities.size());
+    }
+
+    @Test
+    public void daoService_findAllOneEntities_listWithOneItem() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class);
+
+        // Assert
+        assertEquals(1L, entities.size());
+    }
+
+    @Test
+    public void daoService_findAllThreeEntities_listWithThreeItems() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class);
+
+        // Assert
+        assertEquals(3L, entities.size());
+    }
+
+    @Test
+    public void daoService_findAllAscendingThreeEntities_listWithThreeItemsInAscendingOrder() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class, "key", true);
+
+        // Assert
+        assertEquals(3L, entities.size());
+        assertEquals(ConfigurationKey.COUNTRY, entities.get(0).getKey());
+        assertEquals("dk", entities.get(0).getValue());
+        assertEquals(ConfigurationKey.LANGUAGE, entities.get(1).getKey());
+        assertEquals("da", entities.get(1).getValue());
+        assertEquals(ConfigurationKey.TIME_ZONE, entities.get(2).getKey());
+        assertEquals("CET", entities.get(2).getValue());
+    }
+
+    @Test
+    public void daoService_findAllDescendingThreeEntities_listWithThreeItemsInDescendingOrder() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class, "key", false);
+
+        // Assert
+        assertEquals(3L, entities.size());
+        assertEquals(ConfigurationKey.TIME_ZONE, entities.get(0).getKey());
+        assertEquals("CET", entities.get(0).getValue());
+        assertEquals(ConfigurationKey.LANGUAGE, entities.get(1).getKey());
+        assertEquals("da", entities.get(1).getValue());
+        assertEquals(ConfigurationKey.COUNTRY, entities.get(2).getKey());
+        assertEquals("dk", entities.get(2).getValue());
+    }
+
+    @Test
+    public void daoService_findAllPagingOneRecordAscendingThreeEntities_listWithOneItemInAscendingOrder() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class, 0, 1, "key", true);
+
+        // Assert
+        assertEquals(1L, entities.size());
+        assertEquals(ConfigurationKey.COUNTRY, entities.get(0).getKey());
+        assertEquals("dk", entities.get(0).getValue());
+    }
+
+    @Test
+    public void daoService_findAllPagingOneRecordPageTwoAscendingThreeEntities_listWithOneItemInAscendingOrder() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class, 1, 1, "key", true);
+
+        // Assert
+        assertEquals(1L, entities.size());
+        assertEquals(ConfigurationKey.LANGUAGE, entities.get(0).getKey());
+        assertEquals("da", entities.get(0).getValue());
     }
 
 }

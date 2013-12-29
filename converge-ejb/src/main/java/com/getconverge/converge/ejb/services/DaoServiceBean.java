@@ -127,10 +127,7 @@ public class DaoServiceBean {
     public int executeNamedQuery(String namedQueryName, QueryBuilder qb) {
         Set<Entry<String, Object>> rawParameters = qb.parameters().entrySet();
         Query query = this.em.createNamedQuery(namedQueryName);
-
-        for (Entry<String, Object> entry : rawParameters) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
+        setQueryParameters(rawParameters, query);
 
         return query.executeUpdate();
     }
@@ -213,10 +210,7 @@ public class DaoServiceBean {
     public <T> T executeNamedQuery(Class<T> type, String namedQueryName, Map<String, Object> parameters) {
         Set<Entry<String, Object>> rawParameters = parameters.entrySet();
         Query query = this.em.createNamedQuery(namedQueryName);
-
-        for (Entry<String, Object> entry : rawParameters) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
+        setQueryParameters(rawParameters, query);
 
         return (T) query.getSingleResult();
     }
@@ -259,12 +253,8 @@ public class DaoServiceBean {
     public List findWithNamedQuery(String namedQueryName, Map<String, Object> parameters, int resultLimit) {
         Set<Entry<String, Object>> rawParameters = parameters.entrySet();
         Query query = this.em.createNamedQuery(namedQueryName);
-        if (resultLimit > 0) {
-            query.setMaxResults(resultLimit);
-        }
-        for (Entry<String, Object> entry : rawParameters) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
+        setMaxResultsFromQuery(resultLimit, query);
+        setQueryParameters(rawParameters, query);
         return query.getResultList();
     }
 
@@ -280,17 +270,9 @@ public class DaoServiceBean {
     public List findWithNamedQuery(String namedQueryName, Map<String, Object> parameters, int start, int resultLimit) {
         Set<Entry<String, Object>> rawParameters = parameters.entrySet();
         Query query = this.em.createNamedQuery(namedQueryName);
-        if (start > -1) {
-            query.setFirstResult(start);
-        }
-        query.setFirstResult(start);
-        if (resultLimit > 0) {
-            query.setMaxResults(resultLimit);
-        }
-
-        for (Entry<String, Object> entry : rawParameters) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
+        setFirstRecordToRetrieveFromQuery(start, query);
+        setMaxResultsFromQuery(resultLimit, query);
+        setQueryParameters(rawParameters, query);
         return query.getResultList();
     }
 
@@ -305,18 +287,9 @@ public class DaoServiceBean {
      */
     public List findWithQuery(Query query, Map<String, Object> parameters, int start, int resultLimit) {
         Set<Entry<String, Object>> rawParameters = parameters.entrySet();
-
-        if (start > -1) {
-            query.setFirstResult(start);
-        }
-        query.setFirstResult(start);
-        if (resultLimit > 0) {
-            query.setMaxResults(resultLimit);
-        }
-
-        for (Entry<String, Object> entry : rawParameters) {
-            query.setParameter(entry.getKey(), entry.getValue());
-        }
+        setFirstRecordToRetrieveFromQuery(start, query);
+        setMaxResultsFromQuery(resultLimit, query);
+        setQueryParameters(rawParameters, query);
         return query.getResultList();
     }
 
@@ -417,4 +390,23 @@ public class DaoServiceBean {
     private String getSortingDirection(boolean ascending) {
         return ascending ? QUERY_SORTING_ASCENDING : QUERY_SORTING_DESCENDING;
     }
+
+    private void setQueryParameters(Set<Entry<String, Object>> parameters, Query query) {
+        for (Entry<String, Object> param : parameters) {
+            query.setParameter(param.getKey(), param.getValue());
+        }
+    }
+
+    private void setMaxResultsFromQuery(int limit, Query query) {
+        if (limit > 0) {
+            query.setMaxResults(limit);
+        }
+    }
+
+    private void setFirstRecordToRetrieveFromQuery(int start, Query query) {
+        if (start >= 0) {
+            query.setFirstResult(start);
+        }
+    }
+
 }
