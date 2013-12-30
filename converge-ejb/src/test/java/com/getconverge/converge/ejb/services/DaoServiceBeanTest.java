@@ -355,4 +355,39 @@ public class DaoServiceBeanTest {
         assertEquals("da", entities.get(0).getValue());
     }
 
+    @Test
+    public void daoService_findAllPagingPageOneShowTwo_listWithTwoItemsInAddedOrder() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+
+        // Act
+        List<Configuration> entities = daoService.findAll(Configuration.class, 0, 2);
+
+        // Assert
+        assertEquals(2L, entities.size());
+        assertEquals(ConfigurationKey.COUNTRY, entities.get(0).getKey());
+        assertEquals("dk", entities.get(0).getValue());
+        assertEquals(ConfigurationKey.TIME_ZONE, entities.get(1).getKey());
+        assertEquals("CET", entities.get(1).getValue());
+    }
+
+    @Test
+    public void daoService_findWithNamedQueryWithParameters_listWithOneResult() throws Exception {
+        // Arrange
+        daoService.create(new Configuration(ConfigurationKey.COUNTRY, "dk"));
+        daoService.create(new Configuration(ConfigurationKey.LANGUAGE, "da"));
+        daoService.create(new Configuration(ConfigurationKey.TIME_ZONE, "CET"));
+        QueryBuilder queryBuilder = QueryBuilder.with(Configuration.PARAM_FIND_BY_KEY_KEY, ConfigurationKey.LANGUAGE);
+
+        // Act
+        List<Configuration> entities = daoService.findWithNamedQuery(Configuration.FIND_BY_KEY, queryBuilder.parameters());
+
+        // Assert
+        assertEquals(1L, entities.size());
+        assertEquals(ConfigurationKey.LANGUAGE, entities.get(0).getKey());
+        assertEquals("da", entities.get(0).getValue());
+    }
+
 }

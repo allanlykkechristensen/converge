@@ -16,6 +16,7 @@
  */
 package com.getconverge.converge.ejb.services;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +85,19 @@ public class DaoServiceBean {
     }
 
     /**
+     * Updates an existing entity in the database.
+     *
+     * @param <T> Type of entity
+     * @param t Entity to update
+     * @return Updated entity
+     * @throws OptimisticLockException If {@code t} is outdated, and updated
+     * prior to the call of this method
+     */
+    public <T> T update(T t) {
+        return this.em.merge(t);
+    }
+
+    /**
      * Remove a given object from the data store.
      *
      * @param type Type of object
@@ -104,158 +118,47 @@ public class DaoServiceBean {
     }
 
     /**
-     * Updates an existing entity in the database.
-     *
-     * @param <T> Type of entity
-     * @param t Entity to update
-     * @return Updated entity
-     * @throws OptimisticLockException If {@code t} is outdated, and updated
-     * prior to the call of this method
-     */
-    public <T> T update(T t) {
-        return this.em.merge(t);
-    }
-
-    /**
-     * Executes a query on the database and returns the number of records
-     * affected.
-     *
-     * @param namedQueryName Name of the Named Query
-     * @param qb QueryBuilder containing the parameters
-     * @return Number of affected records
-     */
-    public int executeNamedQuery(String namedQueryName, QueryBuilder qb) {
-        Set<Entry<String, Object>> rawParameters = qb.parameters().entrySet();
-        Query query = this.em.createNamedQuery(namedQueryName);
-        setQueryParameters(rawParameters, query);
-
-        return query.executeUpdate();
-    }
-
-    /**
-     * Executes a custom query on the database and returns the number of records
-     * affected.
-     *
-     * @param query Custom query to execute
-     * @return Number of affected records
-     */
-    public int executeQuery(String query) {
-        return this.em.createQuery(query).executeUpdate();
-    }
-
-    /**
-     * Executes a named query on the database and returns the number of records
-     * affected.
-     *
-     * @param namedQueryName Name of the Named Query
-     * @return Number of affected records
-     */
-    public int executeNamedQuery(String namedQueryName) {
-        Query query = this.em.createNamedQuery(namedQueryName);
-        return query.executeUpdate();
-    }
-
-    /**
      * Finds a {@link List} of entity returned by the given named query.
      *
-     * @param namedQueryName Name of the query
+     * @param namedQuery Name of the query
      * @return {@link List} of entities returned by the given query
      */
-    public List findWithNamedQuery(String namedQueryName) {
-        return this.em.createNamedQuery(namedQueryName).getResultList();
+    public List findWithNamedQuery(String namedQuery) {
+        return findWithNamedQuery(namedQuery, Collections.EMPTY_MAP);
     }
 
     /**
      * Finds a {@link List} of entity returned by the given named query.
      *
-     * @param namedQueryName Name of the query
+     * @param namedQuery Name of the query
      * @param parameters Parameters of the query
      * @return {@link List} of entities returned by the given query
      */
-    public List findWithNamedQuery(String namedQueryName, Map<String, Object> parameters) {
-        return findWithNamedQuery(namedQueryName, parameters, 0);
+    public List findWithNamedQuery(String namedQuery, Map<String, Object> parameters) {
+        return findWithNamedQuery(namedQuery, parameters, 0);
     }
 
     /**
      * Finds a {@link List} of entity returned by the given named query.
      *
-     * @param <T> Type of object to retrieve
-     * @param type Type of object to retrieve
-     * @param namedQueryName Name of the query
-     * @param parameters Parameters of the query
-     * @return Matched entity
-     * @throws DataNotFoundException If an entity could not be found
-     */
-    public <T> T findObjectWithNamedQuery(Class<T> type, String namedQueryName, Map<String, Object> parameters) throws DataNotFoundException {
-        @SuppressWarnings("unchecked")
-        List<T> results = findWithNamedQuery(namedQueryName, parameters, 0);
-
-        if (results.isEmpty()) {
-            throw new DataNotFoundException("Not found");
-        } else {
-            return results.iterator().next();
-        }
-    }
-
-    /**
-     * Execute a {@link NamedQuery} and return a single result of the given
-     * type.
-     *
-     * @param <T> Type of entity
-     * @param type Type to retrieve
-     * @param namedQueryName Name of the {@link NamedQuery}
-     * @param parameters Parameters to use in the {@link NamedQuery}
-     * @return Single result of type {@code T} from the given {@link NamedQuery}
-     */
-    public <T> T executeNamedQuery(Class<T> type, String namedQueryName, Map<String, Object> parameters) {
-        Set<Entry<String, Object>> rawParameters = parameters.entrySet();
-        Query query = this.em.createNamedQuery(namedQueryName);
-        setQueryParameters(rawParameters, query);
-
-        return (T) query.getSingleResult();
-    }
-
-    /**
-     * Finds a {@link List} of entity returned by the given named query.
-     *
-     * @param <T> Type of object to retrieve
-     * @param type Type of object to retrieve
-     * @param namedQueryName Name of the query
-     * @param queryBuilder Builder containing the query parameters
-     * @return Matched entity
-     * @throws DataNotFoundException If an entity could not be found
-     */
-    public <T> T findObjectWithNamedQuery(Class<T> type, String namedQueryName, QueryBuilder queryBuilder) throws DataNotFoundException {
-        return findObjectWithNamedQuery(type, namedQueryName, queryBuilder.parameters());
-    }
-
-    /**
-     * Finds a {@link List} of entity returned by the given named query.
-     *
-     * @param queryName Name of the query
+     * @param namedQuery Name of the query
      * @param resultLimit Maximum number of results
      * @return {@link List} of entities returned by the given query
      */
-    public List findWithNamedQuery(String queryName, int resultLimit) {
-        return this.em.createNamedQuery(queryName).
-                setMaxResults(resultLimit).
-                getResultList();
+    public List findWithNamedQuery(String namedQuery, int resultLimit) {
+        return findWithNamedQuery(namedQuery, Collections.EMPTY_MAP, resultLimit);
     }
 
     /**
      * Finds a {@link List} of entity returned by the given named query.
      *
-     * @param namedQueryName Name of the query
+     * @param namedQuery Name of the query
      * @param parameters Parameters of the query
      * @param resultLimit Maximum number of results
      * @return {@link List} of entities returned by the given query
      */
-    public List findWithNamedQuery(String namedQueryName, Map<String, Object> parameters, int resultLimit) {
-        Set<Entry<String, Object>> rawParameters = parameters.entrySet();
-        Query query = this.em.createNamedQuery(namedQueryName);
-        setMaxResultsFromQuery(resultLimit, query);
-        setQueryParameters(rawParameters, query);
-        return query.getResultList();
+    public List findWithNamedQuery(String namedQuery, Map<String, Object> parameters, int resultLimit) {
+        return findWithNamedQuery(namedQuery, parameters, 0, resultLimit);
     }
 
     /**
@@ -274,6 +177,27 @@ public class DaoServiceBean {
         setMaxResultsFromQuery(resultLimit, query);
         setQueryParameters(rawParameters, query);
         return query.getResultList();
+    }
+
+    /**
+     * Finds a {@link List} of entity returned by the given named query.
+     *
+     * @param <T> Type of object to retrieve
+     * @param type Type of object to retrieve
+     * @param namedQueryName Name of the query
+     * @param queryBuilder Builder containing the query parameters
+     * @return Matched entity
+     * @throws DataNotFoundException If an entity could not be found
+     */
+    public <T> T findObjectWithNamedQuery(Class<T> type, String namedQueryName, QueryBuilder queryBuilder) throws DataNotFoundException {
+        @SuppressWarnings("unchecked")
+        List<T> results = findWithNamedQuery(namedQueryName, queryBuilder.parameters(), 0);
+
+        if (results.isEmpty()) {
+            throw new DataNotFoundException("Not found");
+        } else {
+            return results.iterator().next();
+        }
     }
 
     /**
@@ -351,6 +275,45 @@ public class DaoServiceBean {
     public <T> List<T> findAll(Class<T> type, int start, int resultLimit, String orderBy, boolean asc) {
         String query = String.format(QUERY_FIND_ALL_BY_TYPE_ORDERED_BY_FIELD_IN_DIRECTION, type.getSimpleName(), orderBy, getSortingDirection(asc));
         return new LinkedList(this.em.createQuery(query).setFirstResult(start).setMaxResults(resultLimit).getResultList());
+    }
+
+    /**
+     * Executes a named query on the database and returns the number of records
+     * affected.
+     *
+     * @param namedQueryName Name of the Named Query
+     * @return Number of affected records
+     */
+    public int executeNamedQuery(String namedQueryName) {
+        Query query = this.em.createNamedQuery(namedQueryName);
+        return query.executeUpdate();
+    }
+
+    /**
+     * Executes a query on the database and returns the number of records
+     * affected.
+     *
+     * @param namedQueryName Name of the Named Query
+     * @param qb QueryBuilder containing the parameters
+     * @return Number of affected records
+     */
+    public int executeNamedQuery(String namedQueryName, QueryBuilder qb) {
+        Set<Entry<String, Object>> rawParameters = qb.parameters().entrySet();
+        Query query = this.em.createNamedQuery(namedQueryName);
+        setQueryParameters(rawParameters, query);
+
+        return query.executeUpdate();
+    }
+
+    /**
+     * Executes a custom query on the database and returns the number of records
+     * affected.
+     *
+     * @param query Custom query to execute
+     * @return Number of affected records
+     */
+    public int executeQuery(String query) {
+        return this.em.createQuery(query).executeUpdate();
     }
 
     /**
