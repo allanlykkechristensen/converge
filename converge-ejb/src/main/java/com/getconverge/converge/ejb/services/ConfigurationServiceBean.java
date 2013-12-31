@@ -76,7 +76,7 @@ public class ConfigurationServiceBean {
                     QueryBuilder.with(Configuration.PARAM_FIND_BY_KEY_KEY, key));
             return (T) convertStringToType(configuration.getValue(), type);
         } catch (DataNotFoundException ex) {
-            LOG.log(Level.FINEST, "Configuration [{0}] is not customized. Using default configuration value", key);
+            LOG.log(Level.FINEST, "Configuration [" + key + "] is not customized. Using default configuration value", ex);
             String cfgStringValue = defaultConfigurations.getString(key.name());
             return (T) convertStringToType(cfgStringValue, type);
         }
