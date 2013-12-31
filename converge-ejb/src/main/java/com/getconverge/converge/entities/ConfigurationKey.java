@@ -34,7 +34,6 @@ public enum ConfigurationKey implements Serializable {
      */
     DAILY_INTERVAL,
     WORKING_DIRECTORY,
-    MESSAGE_BUNDLE,
     XML_MESSAGE_PACKAGE,
     JOB_QUEUE_INTERVAL,
     LANGUAGE,

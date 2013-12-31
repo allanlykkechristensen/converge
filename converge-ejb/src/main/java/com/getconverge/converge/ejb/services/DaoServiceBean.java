@@ -180,10 +180,10 @@ public class DaoServiceBean {
     }
 
     /**
-     * Finds a {@link List} of entity returned by the given named query.
+     * Finds a single entity returned by the given named query.
      *
-     * @param <T> Type of object to retrieve
-     * @param type Type of object to retrieve
+     * @param <T> Type of object to retrieve and return
+     * @param type Type of object to retrieve and return
      * @param namedQueryName Name of the query
      * @param queryBuilder Builder containing the query parameters
      * @return Matched entity
