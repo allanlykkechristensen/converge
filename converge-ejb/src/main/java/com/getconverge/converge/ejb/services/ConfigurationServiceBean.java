@@ -21,6 +21,8 @@ import com.getconverge.converge.entities.ConfigurationKey;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -34,6 +36,8 @@ import javax.ejb.LocalBean;
 @Stateless
 @LocalBean
 public class ConfigurationServiceBean {
+
+    private static final Logger LOG = Logger.getLogger(ConfigurationServiceBean.class.getName());
 
     private static final String CONFIGURATION_BUNDLE = "Converge";
 
@@ -64,23 +68,30 @@ public class ConfigurationServiceBean {
      * @return Value matching the given key or {@code defaultValue} if the key
      * could not be matched
      */
-    public <T> T get(Class<T> type, ConfigurationKey key, T defaultValue) throws NumberFormatException, UnsupportedOperationException {
+    public <T> T get(Class<T> type, ConfigurationKey key, T defaultValue) {
 
         try {
             Configuration configuration = daoService.findObjectWithNamedQuery(Configuration.class,
                     Configuration.FIND_BY_KEY,
                     QueryBuilder.with(Configuration.PARAM_FIND_BY_KEY_KEY, key));
-            Object cfgValue = convertStringToType(configuration.getValue(), type);
-            return (T) cfgValue;
+            return (T) convertStringToType(configuration.getValue(), type);
         } catch (DataNotFoundException ex) {
+            LOG.log(Level.FINEST, "Configuration [{0}] is not customized. Using default configuration value", key);
             String cfgStringValue = defaultConfigurations.getString(key.name());
-            Object cfgValue = convertStringToType(cfgStringValue, type);
-            return (T) cfgValue;
+            return (T) convertStringToType(cfgStringValue, type);
         }
     }
 
-    // TODO: Find out if there is a commons library that can do the same
-    private Object convertStringToType(String value, Class type) throws NumberFormatException, UnsupportedOperationException {
+    /**
+     * Converts a String to a given time. <em>Developer note: If many times are
+     * needed, then consider migrating to ConverterUtils in Apache Commons
+     * BeanUtils.
+     *
+     * @param value Value to convert
+     * @param type Type of convert the value into
+     * @return Converted object
+     */
+    private Object convertStringToType(String value, Class type) {
         Object cfgValue = value;
         if (type == String.class) {
             cfgValue = value;
