@@ -12,6 +12,7 @@
     <packaging>ejb</packaging>
 
     <name>Converge - EJB</name>
+    <description>Enterprise JavaBeans and other business logic</description>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>

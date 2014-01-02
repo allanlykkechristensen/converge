@@ -10,6 +10,7 @@
     <groupId>com.getconverge</groupId>
     <artifactId>converge-utils</artifactId>
     <name>Converge - Utilities</name>
+    <description>Common utilities used across all layers</description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

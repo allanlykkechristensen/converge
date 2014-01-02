@@ -253,7 +253,7 @@ public class UserAccount implements Serializable {
     /**
      * Gets the mobile phone number of the {@link UserAccount}.
      *
-     * @return Mobile phone number of the {@link UserAcount}
+     * @return Mobile phone number of the {@link UserAccount}
      */
     public String getMobile() {
         return mobile;

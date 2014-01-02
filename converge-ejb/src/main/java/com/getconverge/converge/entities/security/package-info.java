@@ -19,13 +19,18 @@
  * authorization. Security in Converge is based on Apache Shiro and consists of
  * the following objects:<br/>
  * <ul>
- * <li>{@link UserAccount} representing a user of Converge</li>
- * <li>{@link UserRole} representing a role that a {@link UserAccount} can be a
- * member of. {@linkplain UserRoles User roles} is used for identifying users of
- * a certain role in the system and as a convenient way of granting the same
- * permissions to a group of users.</li>
- * <li>{@link Permission} representing something that a {@link UserAccount} or
- * {@link UserRole} is authorized to access.</li>
+ * <li>{@link com.getconverge.converge.entities.security.UserAccount}
+ * representing a user of Converge</li>
+ * <li>{@link com.getconverge.converge.entities.security.UserRole} representing
+ * a role that a {@link com.getconverge.converge.entities.security.UserAccount}
+ * can be a member of.
+ * {@linkplain com.getconverge.converge.entities.security.UserRole User roles}
+ * is used for identifying users of a certain role in the system and as a
+ * convenient way of granting the same permissions to a group of users.</li>
+ * <li>{@link com.getconverge.converge.entities.security.Permission}
+ * representing something that a
+ * {@link com.getconverge.converge.entities.security.UserAccount} or
+ * {@link com.getconverge.converge.entities.security.UserRole} is authorized to access.</li>
  * </ul>
  */
 package com.getconverge.converge.entities.security;
