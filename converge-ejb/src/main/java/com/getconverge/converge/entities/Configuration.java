@@ -156,10 +156,7 @@ public class Configuration implements Serializable {
             return false;
         }
         Configuration other = (Configuration) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return (this.id != null || other.id == null) && (this.id == null || this.id.equals(other.id));
     }
 
     @Override
