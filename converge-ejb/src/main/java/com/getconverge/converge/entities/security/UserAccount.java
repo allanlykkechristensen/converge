@@ -450,7 +450,7 @@ public class UserAccount implements Serializable {
 
         // A valid language string is either two or five characters: la_sp where
         // la is Language, sp is Speciality or la where la is Language
-        if ((this.language.length() == fiveCharValidLength)) {
+        if (this.language.length() == fiveCharValidLength) {
             l = new Locale(this.language.substring(startLanguage,
                     endLanguage), this.language.substring(
                             startLanguageSpeciality, endLanguageSpeciality));
