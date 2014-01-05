@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 Converge Consulting
+ * Copyright (C) 2013 - 2014 Converge Consulting Limited
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,6 +124,23 @@ public class ConfigurationServiceBean {
             entry.setKey(key);
             entry.setValue(value);
             daoService.create(entry);
+        }
+    }
+
+    /**
+     * Resets the value in the given {@link ConfigurationKey}.
+     *
+     * @param key {@link ConfigurationKey} for which to reset the value
+     */
+    public void reset(ConfigurationKey key) {
+        try {
+            Configuration configuration = daoService.findObjectWithNamedQuery(Configuration.class,
+                    Configuration.FIND_BY_KEY,
+                    QueryBuilder.with(Configuration.PARAM_FIND_BY_KEY_KEY, key));
+
+            daoService.delete(Configuration.class, configuration.getId());
+        } catch (DataNotFoundException ex) {
+            LOG.log(Level.FINEST, "Configuration [" + key + "] is not customized. Resetting is not necessary", ex);
         }
     }
 

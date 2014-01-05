@@ -225,4 +225,32 @@ public class ConfigurationServiceBeanTest {
         assertEquals(expectedLongVersion, actualLongVersion);
     }
 
+    @Test
+    public void configurationServiceBean_resetCustomConfiguration_customConfigRemoved() {
+        // Arrange
+        String expVersion = cfgService.get(String.class, ConfigurationKey.VERSION);
+        cfgService.set(ConfigurationKey.VERSION, "Some custom version");
+        String updatedVersion = cfgService.get(String.class, ConfigurationKey.VERSION);
+
+        // Act
+        cfgService.reset(ConfigurationKey.VERSION);
+        String version = cfgService.get(String.class, ConfigurationKey.VERSION);
+
+        // Assert
+        assertNotEquals(version, updatedVersion);
+        assertEquals(expVersion, version);
+    }
+
+    @Test
+    public void configurationServiceBean_resetDefaultConfiguration_configRemainsWithDefaultValue() {
+        // Arrange
+        String expLanguage = cfgService.get(String.class, ConfigurationKey.LANGUAGE);
+
+        // Act
+        cfgService.reset(ConfigurationKey.LANGUAGE);
+        String resetLanguage = cfgService.get(String.class, ConfigurationKey.LANGUAGE);
+
+        // Assert
+        assertEquals(expLanguage, resetLanguage);
+    }
 }
