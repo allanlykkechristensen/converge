@@ -99,6 +99,21 @@ public class UserAccountTest {
     }
 
     @Test
+    public void userAccount_isRightToLeftWithNoLocaleSet_returnFalse() {
+        // Arrange
+        String language = null;
+        UserAccount user = new UserAccount();
+        user.setLanguage(language);
+        boolean expectedResult = false;
+
+        // Act
+        boolean result = user.isRightToLeft();
+
+        // Assert
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
     public void userAccount_isRightToLeftWithArabicLanguageSet_returnTrue() {
         // Arrange
         String language = "ar";
@@ -128,4 +143,61 @@ public class UserAccountTest {
         // Assert
         assertEquals(expectedResult, result);
     }
+
+    @Test
+    public void userAcount_twoUserAccountsWithSameUsername_equalsTrue() {
+        // Arrange
+        UserAccount ua1 = new UserAccount("allan");
+        UserAccount ua2 = new UserAccount("allan");
+
+        // Act
+        boolean usersEquals = ua1.equals(ua2);
+
+        // Assert
+        assertTrue(usersEquals);
+        assertEquals(ua1.hashCode(), ua2.hashCode());
+    }
+
+    @Test
+    public void userAccount_twoUserAccountsWithDifferentUsername_equalsFalse() {
+        // Arrange
+        UserAccount ua1 = new UserAccount("allan");
+        UserAccount ua2 = new UserAccount("lykke");
+
+        // Act
+        boolean usersEquals = ua1.equals(ua2);
+
+        // Assert
+        assertFalse(usersEquals);
+        assertNotEquals(ua1.hashCode(), ua2.hashCode());
+    }
+
+    @Test
+    public void userAccount_oneUserAccountOneNonUserAccount_equalsFalse() {
+        // Arrange
+        UserAccount userAccount = new UserAccount("allan");
+        String nonUserAccount = "This is not a UserAccount object";
+
+        // Act
+        boolean usersEquals = userAccount.equals(nonUserAccount);
+
+        // Assert
+        assertFalse(usersEquals);
+        assertNotEquals(userAccount.hashCode(), nonUserAccount.hashCode());
+    }
+
+    @Test
+    public void userAccount_userAccountWithUsernameAndId_toStringIsUniform() {
+        // Arrange
+        UserAccount userAccount = new UserAccount("allan");
+        userAccount.setId(123L);
+        String expectedResult = userAccount.getClass().getName() + "[id=123/username=allan]";
+
+        // Act
+        String result = userAccount.toString();
+
+        // Assert
+        assertEquals(expectedResult, result);
+    }
+
 }
