@@ -19,6 +19,12 @@
             <version>${project.version}</version>
             <type>ejb</type>
         </dependency>
+        <dependency>
+            <artifactId>converge-ws</artifactId>
+            <groupId>${project.groupId}</groupId>
+            <version>${project.version}</version>
+            <type>war</type>
+        </dependency>
     </dependencies>
     <build>
         <finalName>converge</finalName>
@@ -37,6 +43,12 @@
                     </archive>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <modules>
+                        <webModule>
+                            <artifactId>converge-ws</artifactId>
+                            <groupId>${project.groupId}</groupId>
+                            <bundleFileName>converge-ws.jar</bundleFileName>
+                            <contextRoot>/converge-ws</contextRoot>
+                        </webModule>
                         <ejbModule>
                             <artifactId>converge-ejb</artifactId>
                             <groupId>${project.groupId}</groupId>

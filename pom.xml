@@ -82,6 +82,21 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <archive>                   
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
@@ -120,9 +135,10 @@
     </build>
     
     <modules>
-        <module>converge-ear</module>
-        <module>converge-ejb</module>
         <module>converge-utils</module>
+        <module>converge-ejb</module>
+        <module>converge-ws</module>
+        <module>converge-ear</module>
     </modules>
     
     <reporting>
