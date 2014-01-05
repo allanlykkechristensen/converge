@@ -139,7 +139,8 @@
         <module>converge-ejb</module>
         <module>converge-ws</module>
         <module>converge-ear</module>
-    </modules>
+    <module>converge-arquillian</module>
+  </modules>
     
     <reporting>
         <plugins>

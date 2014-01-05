@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.getconverge</groupId>
+        <artifactId>converge</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+    </parent>
+    <groupId>com.getconverge</groupId>
+    <artifactId>converge-arquillian</artifactId>
+    <version>3.0.0-SNAPSHOT</version>
+    <name>Converge - Arquillian Test Configuration</name>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Override dependency resolver with latest version. 
+            This must go *BEFORE* the Arquillian BOM. --> 
+            <dependency>
+                <groupId>org.jboss.shrinkwrap.resolver</groupId>
+                <artifactId>shrinkwrap-resolver-bom</artifactId>
+                <version>2.0.1</version>
+                <scope>import</scope> 
+                <type>pom</type>
+            </dependency> 
+            
+            <!-- Required for Arquillian Integration Testing -->
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId>
+                <version>1.0.3.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Required for Arquillian Integration Testing -->
+        <dependency> 
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-depchain</artifactId>
+            <version>2.0.1</version>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency> 
+        
+        <!-- Required for Arquillian Integration Testing + JEE API-->
+        <dependency>
+            <groupId>org.glassfish.main.extras</groupId>
+            <artifactId>glassfish-embedded-all</artifactId>
+            <version>3.1.2</version>
+        </dependency> 
+        <!-- Required for Arquillian Integration Testing -->
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+            <version>1.0.0.CR3</version>
+        </dependency>
+        <!-- Required for Arquillian Integration Testing -->
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+        </dependency>
+
+    </dependencies>
+    <build>
+        <plugins>
+        
+        </plugins>
+        
+    </build>
+</project>

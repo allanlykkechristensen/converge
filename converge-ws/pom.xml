@@ -21,16 +21,6 @@
     
     <dependencyManagement>
         <dependencies>
-            <!-- Override dependency resolver with latest version. 
-            This must go *BEFORE* the Arquillian BOM. --> 
-            <dependency>
-                <groupId>org.jboss.shrinkwrap.resolver</groupId>
-                <artifactId>shrinkwrap-resolver-bom</artifactId>
-                <version>2.0.1</version>
-                <scope>import</scope> 
-                <type>pom</type>
-            </dependency> 
-            
             <!-- Required for Arquillian Integration Testing -->
             <dependency>
                 <groupId>org.jboss.arquillian</groupId>
@@ -44,52 +34,31 @@
     
     <dependencies>
         <dependency>
-            <groupId>com.getconverge</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>converge-ejb</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency-->
-        
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <!-- Required for Arquillian Integration Testing -->
-        <dependency> 
-            <groupId>org.jboss.shrinkwrap.resolver</groupId>
-            <artifactId>shrinkwrap-resolver-depchain</artifactId>
-            <version>2.0.1</version>
-            <scope>test</scope>
-            <type>pom</type>
-        </dependency> 
-        
-        <!-- Required for Arquillian Integration Testing + JEE API-->
+
         <dependency>
             <groupId>org.glassfish.main.extras</groupId>
             <artifactId>glassfish-embedded-all</artifactId>
             <version>3.1.2</version>
             <scope>provided</scope>
         </dependency> 
+
         <!-- Required for Arquillian Integration Testing -->
         <dependency>
-            <groupId>org.jboss.arquillian.container</groupId>
-            <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
-            <version>1.0.0.CR3</version>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>converge-arquillian</artifactId>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
-        <!-- Required for Arquillian Integration Testing -->
+        
         <dependency>
-            <groupId>org.jboss.arquillian.junit</groupId>
-            <artifactId>arquillian-junit-container</artifactId>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -111,25 +80,46 @@
                     <archiveClasses>true</archiveClasses>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <jvm>${env.JAVA_HOME}/bin/java</jvm>
+                    <systemProperties>
+                        <property>
+                            <name>derby.stream.error.file</name>
+                            <value>target/derby.log</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+
             <!--
+                This plug-in is required to unpack the test resources such as
+                Arquillian configuration, test peristence unit, and GlassFish
+                resources. The test resources are unpacked in the local build
+                directory.
+            -->            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <version>2.6</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>generate-test-resources</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>unpack</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/test-classes</outputDirectory>
                             <silent>true</silent>
                             <artifactItems>
                                 <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>7.0</version>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>converge-arquillian</artifactId>
+                                    <version>${project.version}</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>
@@ -137,7 +127,6 @@
                     </execution>
                 </executions>
             </plugin>
-            -->
         </plugins>
     </build>
 
