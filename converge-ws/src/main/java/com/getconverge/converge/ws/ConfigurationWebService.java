@@ -29,25 +29,69 @@ import javax.jws.WebService;
 @WebService
 public interface ConfigurationWebService {
 
+    /**
+     * Gets a configuration value as a given type.
+     *
+     * @param <T> Type of entity to retrieve and return
+     * @param type Type of entity to retrieve and return
+     * @param key Key of the configuration value
+     * @return Value matching the given key
+     */
     @WebMethod(operationName = "get")
     <T> T get(@WebParam(name = "type") Class<T> type, @WebParam(name = "key") String key);
 
+    /**
+     * Gets the locale identifier of the application.
+     *
+     * @return Locale identifier of the application
+     */
     @WebMethod(operationName = "getApplicationLocale")
     String getApplicationLocale();
 
+    /**
+     * Gets the build time of the current version.
+     *
+     * @return Current build time of the system
+     */
     @WebMethod(operationName = "getBuildTime")
     String getBuildTime();
 
+    /**
+     * Gets the long display of the current version of the system. The short
+     * display only contains the version number, whereas the long display also
+     * includes the date when the application was built.
+     *
+     * @return Current version of the system
+     */
     @WebMethod(operationName = "getLongVersion")
     String getLongVersion();
 
+    /**
+     * Gets the short display of the current version of the system. The short
+     * display only contains the version number, whereas the long display also
+     * includes the date when the application was built.
+     *
+     * @return Current version of the system
+     */
     @WebMethod(operationName = "getVersion")
     String getVersion();
 
+    /**
+     * Updates the value of a configuration. The updated value is stored in the
+     * persisted storage.
+     *
+     * @param key Key of the configuration
+     * @param value Value of the configuration
+     */
     @WebMethod(operationName = "set")
     @Oneway
     void set(@WebParam(name = "key") String key, @WebParam(name = "value") String value);
 
+    /**
+     * Resets the value in the given configuration key.
+     *
+     * @param key Configuration key for which to reset the value
+     */
     @WebMethod(operationName = "reset")
     @Oneway
     void reset(@WebParam(name = "key") String key);
