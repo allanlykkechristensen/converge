@@ -417,10 +417,6 @@ public class UserAccount implements Serializable {
      */
     public boolean isRightToLeft() {
         Locale l = getPreferredLocale();
-        if (l == null) {
-            return false;
-        }
-
         return !ComponentOrientation.getOrientation(l).isLeftToRight();
     }
 
@@ -433,6 +429,10 @@ public class UserAccount implements Serializable {
      * {@code null} if preferred language is invalid.
      */
     public Locale getPreferredLocale() {
+        if (this.language == null) {
+            return Locale.getDefault();
+        }
+        
         // Valid lengths of the preferred language string
         final int fiveCharValidLength = 5;
         final int twoCharValidLength = 2;
