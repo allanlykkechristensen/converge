@@ -29,7 +29,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class ConfigurationDaoIT {
+public class ConfigurationDaoTest {
 
     @Inject
     private DaoServiceBean daoService;
