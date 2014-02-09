@@ -39,7 +39,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class ConfigurationServiceTest {
+public class ConfigurationServiceIT {
 
     @Deployment
     public static EnterpriseArchive prepareDeploymentForTesting() {

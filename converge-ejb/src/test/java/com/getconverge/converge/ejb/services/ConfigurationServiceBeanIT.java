@@ -33,7 +33,7 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 
 @RunWith(Arquillian.class)
-public class ConfigurationServiceBeanTest {
+public class ConfigurationServiceBeanIT {
 
     @Inject
     private ConfigurationServiceBean cfgService;
